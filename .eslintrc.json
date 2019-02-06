@@ -1,0 +1,38 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    }
+  },
+  "rules": {
+    "no-console": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["import", "@typescript-eslint"],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-restricted-globals": "off",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+        ]
+      }
+    }
+  ]
+}
