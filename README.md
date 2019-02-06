@@ -2,37 +2,35 @@
 
 Webpack Plugin, which modifying source of modules
 
-## Getting started
+## Installation
 
-### Installation
-
-#### NPM
+### NPM
 
 ```
 npm i -D modify-source-webpack-plugin
 ```
 
-#### Yarn
+### Yarn
 
 ```
 yarn add -D modify-source-webpack-plugin
 ```
 
-### Import
+## Import
 
-#### ES6/TypeScript
+### ES6/TypeScript
 
 ```js
 import { ModifyModuleSourcePlugin } from 'modify-source-webpack-plugin';
 ```
 
-#### CJS
+### CJS
 
 ```js
 const { ModifyModuleSourcePlugin } = require('modify-source-webpack-plugin');
 ```
 
-### Using
+## Usage
 
 **webpack.config.js**
 
@@ -42,9 +40,9 @@ module.exports = {
 };
 ```
 
-### Options
+## Options
 
-#### `test`
+### `test`
 
 Type: `RegExp | ((module: compilation.Module | any) => boolean)`
 
@@ -54,7 +52,7 @@ Default: `undefined`
 
 RegExp or function, which used to find need module(s). Applies to `module.userRequest`
 
-##### Example
+#### Example
 
 ```js
 module.exports = {
@@ -66,7 +64,7 @@ module.exports = {
 };
 ```
 
-#### `modify`
+### `modify`
 
 Type: `(source: string, fileName: string) => string`
 
@@ -76,7 +74,7 @@ Default: `undefined`
 
 Function, which accept source and filename and should return a modified source
 
-##### Example
+#### Example
 
 ```js
 module.exports = {
@@ -90,7 +88,7 @@ module.exports = {
 };
 ```
 
-#### `findFirst`
+### `findFirst`
 
 Type: `boolean`
 
