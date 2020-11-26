@@ -20,9 +20,9 @@
     "build"
   ],
   "scripts": {
-    "compile": "tsc -b .",
-    "clean": "tsc -b . --clean",
-    "prepublishOnly": "run-s clean compile",
+    "build": "tsc -b .",
+    "clean-build": "tsc -b . --clean",
+    "prepublishOnly": "run-s clean-build build",
     "lint-staged": "lint-staged",
     "test": "jest"
   },
