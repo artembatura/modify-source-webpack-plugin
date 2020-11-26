@@ -23,14 +23,18 @@
     "compile": "tsc -b .",
     "clean": "tsc -b . --clean",
     "prepublishOnly": "run-s clean compile",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-formatter-pretty": "^4.0.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-import-helpers": "^1.1.0",
     "eslint-plugin-prettier": "^3.1.4",

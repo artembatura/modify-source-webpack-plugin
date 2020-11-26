@@ -11,6 +11,7 @@
   ],
   "plugins": ["eslint-plugin-import-helpers"],
   "env": {
+    "jest": true,
     "node": true
   },
   "parserOptions": {
