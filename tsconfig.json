@@ -2,12 +2,13 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "build",
-    "target": "ES2017",
-    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2018",
+    "module": "CommonJS",
     "strict": true,
     "esModuleInterop": true,
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "sourceMap": true
   }
 }

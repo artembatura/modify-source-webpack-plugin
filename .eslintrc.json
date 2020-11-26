@@ -11,7 +11,6 @@
   ],
   "plugins": ["eslint-plugin-import-helpers"],
   "env": {
-    "jest": true,
     "node": true
   },
   "parserOptions": {
@@ -26,7 +25,7 @@
     }
   },
   "rules": {
-    "prettier/prettier": ["warn", { "singleQuote": true }],
+    "prettier/prettier": ["warn"],
     "quotes": [
       "warn",
       "single",
@@ -43,11 +42,7 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": [
-          "module",
-          "/^@zero-scripts/",
-          ["parent", "sibling", "index"]
-        ],
+        "groups": ["module", ["parent", "sibling", "index"]],
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ]
