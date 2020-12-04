@@ -4,7 +4,7 @@ import type { compilation, Compiler } from 'webpack';
 export interface Option {
   test: RegExp | ((module: compilation.Module | any) => boolean);
   modify: (source: string, fileName: string) => string;
-  findFirst: boolean;
+  findFirst?: boolean;
 }
 
 export type Options = Option | Option[];

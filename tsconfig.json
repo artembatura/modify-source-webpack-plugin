@@ -1,4 +1,5 @@
 {
+  "exclude": ["node_modules", "build", "**/__tests__/*.test.ts"],
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "build",
