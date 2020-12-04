@@ -1,6 +1,7 @@
 devDependencies:
   '@types/jest': 26.0.15
   '@types/node': 14.14.10
+  '@types/rimraf': 3.0.0
   '@types/webpack': 4.41.25
   '@typescript-eslint/eslint-plugin': 4.8.2_6341bfd4e6c74608cac2d9a1d059520a
   '@typescript-eslint/parser': 4.8.2_eslint@7.14.0+typescript@4.1.2
@@ -15,6 +16,7 @@ devDependencies:
   lint-staged: 10.5.2
   npm-run-all: 4.1.5
   prettier: 2.2.0
+  rimraf: 3.0.2
   ts-jest: 26.4.4_jest@26.6.3+typescript@4.1.2
   typescript: 4.1.2
   webpack: 4.44.2
@@ -593,6 +595,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-S63Dt4CZOkuTmpLGGWtT/mQdVORJOpx6SZWGVaP56dda/0Nx5nEe82K7/LAm8zYr6SfMq+1N2OreIOrHAx656w==
+  /@types/glob/7.1.3:
+    dependencies:
+      '@types/minimatch': 3.0.3
+      '@types/node': 14.14.10
+    dev: true
+    resolution:
+      integrity: sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==
   /@types/graceful-fs/4.1.4:
     dependencies:
       '@types/node': 14.14.10
@@ -630,6 +639,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+  /@types/minimatch/3.0.3:
+    dev: true
+    resolution:
+      integrity: sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
   /@types/node/14.14.10:
     dev: true
     resolution:
@@ -646,6 +659,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-UEyp8LwZ4Dg30kVU2Q3amHHyTn1jEdhCIE59ANed76GaT1Vp76DD3ZWSAxgCrw6wJ0TqeoBpqmfUHiUDPs//HQ==
+  /@types/rimraf/3.0.0:
+    dependencies:
+      '@types/glob': 7.1.3
+      '@types/node': 14.14.10
+    dev: true
+    resolution:
+      integrity: sha512-7WhJ0MdpFgYQPXlF4Dx+DhgvlPCfz/x5mHaeDQAKhcenvQP1KCpLQ18JklAqeGMYSAT2PxLpzd0g2/HE7fj7hQ==
   /@types/source-list-map/0.1.2:
     dev: true
     resolution:
@@ -6684,6 +6704,7 @@ packages:
 specifiers:
   '@types/jest': ^26.0.15
   '@types/node': ^14.14.10
+  '@types/rimraf': ^3.0.0
   '@types/webpack': ^4.41.25
   '@typescript-eslint/eslint-plugin': ^4.8.2
   '@typescript-eslint/parser': ^4.8.2
@@ -6698,6 +6719,7 @@ specifiers:
   lint-staged: ^10.5.2
   npm-run-all: ^4.1.5
   prettier: ^2.2.0
+  rimraf: ^3.0.2
   ts-jest: ^26.4.4
   typescript: ^4.1.2
   webpack: ^4.44.2
