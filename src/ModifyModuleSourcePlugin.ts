@@ -34,14 +34,17 @@ export class ModifyModuleSourcePlugin {
             })();
 
             if (isMatched) {
-              normalModule.loaders.unshift({
+              (normalModule.loaders as {
+                loader: string;
+                options: any;
+                ident?: string;
+                type?: string;
+              }[]).unshift({
                 loader: require.resolve('./loader.js'),
                 options: {
                   filename: path.basename(moduleRequest),
                   modify: options.modify
-                },
-                ident: 'ModifyModuleSourceLoader',
-                type: undefined as any
+                }
               });
             }
           });
