@@ -24,13 +24,13 @@
     "clean-build": "tsc -b . --clean",
     "prepublishOnly": "run-s clean-build build",
     "lint-staged": "lint-staged",
-    "test": "jest"
+    "test": "jest",
+    "watch": "tsc -b . --watch"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.10",
     "@types/rimraf": "^3.0.0",
-    "@types/webpack": "^4.41.25",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "eslint": "^7.14.0",
@@ -47,10 +47,10 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^26.4.4",
     "typescript": "^4.1.2",
-    "webpack": "^4.44.2"
+    "webpack": "^5.10.0"
   },
   "peerDependencies": {
-    "webpack": "4.x"
+    "webpack": "^4.37.0 || ^5.4.0"
   },
   "husky": {
     "hooks": {
@@ -72,5 +72,9 @@
     "source",
     "modify",
     "edit"
-  ]
+  ],
+  "dependencies": {
+    "loader-utils": "^2.0.0",
+    "schema-utils": "^3.0.0"
+  }
 }
