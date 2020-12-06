@@ -4,10 +4,10 @@ Webpack Plugin, which modifying modules source.
 
 ## Compatibility
 
-| Version | Status |
-| ------- | ------ |
-| ^5.0.0  | ✅     |
-| ^4.4.0  | ✅     |
+| Webpack Version | Plugin version | Status                   |
+| --------------- | -------------- | ------------------------ |
+| ^5.0.0          | ^2.0.0         | <p align="center">✅</p> |
+| ^4.37.0         | ^1.1.0         | <p align="center">✅</p> |
 
 ## Installation
 
@@ -123,3 +123,7 @@ module.exports = {
   ]
 };
 ```
+
+## Options array
+
+TODO: add docs and tests

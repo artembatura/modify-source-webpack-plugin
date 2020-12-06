@@ -1,6 +1,6 @@
 {
   "name": "modify-source-webpack-plugin",
-  "version": "1.0.1",
+  "version": "2.0.0-beta.0",
   "description": "Webpack Plugin for modifying modules source",
   "author": {
     "name": "Artem Batura",
@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "build": "tsc -b .",
-    "clean-build": "tsc -b . --clean",
+    "clean-build": "rimraf build",
     "prepublishOnly": "run-s clean-build build",
     "lint-staged": "lint-staged",
     "test": "jest",
@@ -50,7 +50,7 @@
     "webpack": "^5.10.0"
   },
   "peerDependencies": {
-    "webpack": "^4.37.0 || ^5.4.0"
+    "webpack": "^4.37.0 || ^5.0.0"
   },
   "husky": {
     "hooks": {
