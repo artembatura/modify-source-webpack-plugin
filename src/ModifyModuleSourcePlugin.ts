@@ -1,22 +1,15 @@
 import path from 'path';
-import type { Compiler, compilation } from 'webpack';
+import type { Compiler } from 'webpack';
+import { NormalModule } from 'webpack';
 
 export interface Option {
-  test: RegExp | ((module: compilation.Module) => boolean);
+  test: RegExp | ((module: NormalModule) => boolean);
   modify: (source: string, fileName: string) => string;
 }
 
 export type Options = Option | Option[];
 
 const PLUGIN_NAME = 'ModifyModuleSourcePlugin';
-
-interface NormalModule extends compilation.Module {
-  request: string;
-  loaders: {
-    loader: string;
-    options: any;
-  }[];
-}
 
 export class ModifyModuleSourcePlugin {
   constructor(protected readonly options: Options) {}
@@ -25,10 +18,10 @@ export class ModifyModuleSourcePlugin {
     const options: Option[] = [].concat(this.options as never[]);
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
-      compilation.hooks.normalModuleLoader.tap(
+      NormalModule.getCompilationHooks(compilation).loader.tap(
         PLUGIN_NAME,
         (_, normalModule) => {
-          const moduleRequest = (normalModule as NormalModule).request || '';
+          const moduleRequest = normalModule.request || '';
 
           options.forEach(options => {
             const test = options.test;
@@ -41,7 +34,12 @@ export class ModifyModuleSourcePlugin {
             })();
 
             if (isMatched) {
-              (normalModule as NormalModule).loaders.unshift({
+              (normalModule.loaders as {
+                loader: string;
+                options: any;
+                ident?: string;
+                type?: string;
+              }[]).unshift({
                 loader: require.resolve('./loader.js'),
                 options: {
                   filename: path.basename(moduleRequest),
