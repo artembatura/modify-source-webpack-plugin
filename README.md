@@ -1,13 +1,13 @@
 # modify-source-webpack-plugin
 
-Webpack Plugin, which modifying modules source.
+Webpack Plugin for modifying modules source.
 
 ## Compatibility
 
-| Webpack Version | Plugin version | Status                   |
-| --------------- | -------------- | ------------------------ |
-| ^5.0.0          | ^2.0.0         | <p align="center">✅</p> |
-| ^4.37.0         | ^1.1.0         | <p align="center">✅</p> |
+| Webpack Version | Plugin version | Status                   | Branch                                                                         |
+| --------------- | -------------- | ------------------------ | ------------------------------------------------------------------------------ |
+| ^5.0.0          | ^2.0.0         | <p align="center">✅</p> | [master](https://github.com/artemirq/modify-source-webpack-plugin/tree/master) |
+| ^4.37.0         | ^1.1.0         | <p align="center">✅</p> | [1.x](https://github.com/artemirq/modify-source-webpack-plugin/tree/1.x)       |
 
 ## Installation
 
