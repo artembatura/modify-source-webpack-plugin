@@ -1,6 +1,13 @@
 # modify-source-webpack-plugin
 
-Webpack Plugin, which modifying source of modules
+Webpack Plugin, which modifying modules source.
+
+## Compatibility
+
+| Webpack Version | Plugin version | Status                   |
+| --------------- | -------------- | ------------------------ |
+| ^5.0.0          | ^2.0.0         | <p align="center">✅</p> |
+| ^4.37.0         | ^1.1.0         | <p align="center">✅</p> |
 
 ## Installation
 
@@ -44,15 +51,17 @@ module.exports = {
 
 ### `test`
 
-Type: `RegExp | ((module: compilation.Module | any) => boolean)`
-
-Default: `undefined`
+Type: `RegExp | ((module: webpack.NormalModule) => boolean)`
 
 `Required`
 
-RegExp or function, which used to find need module(s). Applies to `module.userRequest`
+`test` is RegExp or function, which used to determinate which modules should be modified.
 
-#### Example
+`RegExp` will be applied to `NormalModule.request`.
+
+`function` will be applied to `NormalModule`.
+
+#### Example with RegExp
 
 ```js
 module.exports = {
@@ -64,15 +73,28 @@ module.exports = {
 };
 ```
 
+#### Example with Function
+
+```js
+module.exports = {
+  plugins: [
+    new ModifyModuleSourcePlugin({
+      test: module =>
+        module.source().source().includes('my-secret-module-marker')
+    })
+  ]
+};
+```
+
 ### `modify`
 
 Type: `(source: string, fileName: string) => string`
 
-Default: `undefined`
-
 `Required`
 
-Function, which accept source and filename and should return a modified source
+Function accept a source and filename. Should return a modified source.
+
+WARNING: modify function should make JavaScript compatible changes, for example all unsupported syntax will break your build or create errors in runtime.
 
 #### Example
 
@@ -80,19 +102,28 @@ Function, which accept source and filename and should return a modified source
 module.exports = {
   plugins: [
     new ModifyModuleSourcePlugin({
-      modify: (src, fileName) =>
+      test: /my-file\.js$/,
+      modify: (src, filename) =>
         src +
-        `\nThis file (${fileName}) is written by artemir. All rights reserved`
+        `\n\n// This file (${filename}) is written by me. All rights reserved`
     })
   ]
 };
 ```
 
-### `findFirst`
+#### Bad example (never do this)
 
-Type: `boolean`
+```js
+module.exports = {
+  plugins: [
+    new ModifyModuleSourcePlugin({
+      test: /my-file\.js$/,
+      modify: src => src + `haha I break your build LOL`
+    })
+  ]
+};
+```
 
-Default: `undefined`
+## Options array
 
-If equals `false` or not setted, modifies all modules, which approach by `test` option.
-If equals `true`, modifies first found module source
+TODO: add docs and tests

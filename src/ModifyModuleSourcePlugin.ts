@@ -1,39 +1,51 @@
 import path from 'path';
-import type { compilation, Compiler } from 'webpack';
+import type { Compiler } from 'webpack';
+import { NormalModule } from 'webpack';
 
 export interface Option {
-  test: RegExp | ((module: compilation.Module | any) => boolean);
+  test: RegExp | ((module: NormalModule) => boolean);
   modify: (source: string, fileName: string) => string;
-  findFirst?: boolean;
 }
 
 export type Options = Option | Option[];
 
+const PLUGIN_NAME = 'ModifyModuleSourcePlugin';
+
 export class ModifyModuleSourcePlugin {
-  constructor(private readonly options: Options) {}
+  constructor(protected readonly options: Options) {}
 
   public apply(compiler: Compiler): void {
-    compiler.hooks.compilation.tap('ModifyModuleSourcePlugin', compilation => {
-      compilation.hooks.finishModules.tap(
-        'ModifyModuleSourcePlugin',
-        (modules: any[]) => {
-          const options: Option[] = [].concat(this.options as never[]);
+    const options: Option[] = [].concat(this.options as never[]);
 
-          options.forEach(({ test, modify, findFirst }) => {
-            for (const module of Object.values(modules)) {
-              if (
-                (typeof test === 'function' && test(module)) ||
-                (test instanceof RegExp && test.test(module.userRequest))
-              ) {
-                module._source._value = modify(
-                  module._source._value,
-                  path.basename(module.userRequest)
-                );
+    compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
+      NormalModule.getCompilationHooks(compilation).loader.tap(
+        PLUGIN_NAME,
+        (_, normalModule) => {
+          const moduleRequest = normalModule.request || '';
 
-                if (findFirst) {
-                  break;
-                }
+          options.forEach(options => {
+            const test = options.test;
+            const isMatched = (() => {
+              if (typeof test === 'function' && test(normalModule)) {
+                return true;
               }
+
+              return test instanceof RegExp && test.test(moduleRequest);
+            })();
+
+            if (isMatched) {
+              (normalModule.loaders as {
+                loader: string;
+                options: any;
+                ident?: string;
+                type?: string;
+              }[]).unshift({
+                loader: require.resolve('./loader.js'),
+                options: {
+                  filename: path.basename(moduleRequest),
+                  modify: options.modify
+                }
+              });
             }
           });
         }
