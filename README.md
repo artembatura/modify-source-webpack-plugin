@@ -28,13 +28,13 @@ yarn add -D modify-source-webpack-plugin
 ### ES6/TypeScript
 
 ```js
-import { ModifyModuleSourcePlugin } from 'modify-source-webpack-plugin';
+import { ModifySourcePlugin } from 'modify-source-webpack-plugin';
 ```
 
 ### CJS
 
 ```js
-const { ModifyModuleSourcePlugin } = require('modify-source-webpack-plugin');
+const { ModifySourcePlugin } = require('modify-source-webpack-plugin');
 ```
 
 ## Usage
@@ -43,7 +43,7 @@ const { ModifyModuleSourcePlugin } = require('modify-source-webpack-plugin');
 
 ```js
 module.exports = {
-  plugins: [new ModifyModuleSourcePlugin(options)]
+  plugins: [new ModifySourcePlugin(options)]
 };
 ```
 
@@ -66,7 +66,7 @@ Type: `RegExp | ((module: webpack.NormalModule) => boolean)`
 ```js
 module.exports = {
   plugins: [
-    new ModifyModuleSourcePlugin({
+    new ModifySourcePlugin({
       test: /index\.js$/
     })
   ]
@@ -78,7 +78,7 @@ module.exports = {
 ```js
 module.exports = {
   plugins: [
-    new ModifyModuleSourcePlugin({
+    new ModifySourcePlugin({
       test: module =>
         module.source().source().includes('my-secret-module-marker')
     })
@@ -101,7 +101,7 @@ WARNING: modify function should make JavaScript compatible changes, for example 
 ```js
 module.exports = {
   plugins: [
-    new ModifyModuleSourcePlugin({
+    new ModifySourcePlugin({
       test: /my-file\.js$/,
       modify: (src, filename) =>
         src +
@@ -116,14 +116,10 @@ module.exports = {
 ```js
 module.exports = {
   plugins: [
-    new ModifyModuleSourcePlugin({
+    new ModifySourcePlugin({
       test: /my-file\.js$/,
       modify: src => src + `haha I break your build LOL`
     })
   ]
 };
 ```
-
-## Options array
-
-TODO: add docs and tests

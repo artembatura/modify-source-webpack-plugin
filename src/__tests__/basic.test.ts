@@ -3,7 +3,7 @@ import path from 'path';
 import rimraf from 'rimraf';
 import webpack, { Configuration } from 'webpack';
 
-import { ModifyModuleSourcePlugin } from '../ModifyModuleSourcePlugin';
+import { ModifySourcePlugin } from '../ModifySourcePlugin';
 import DoneCallback = jest.DoneCallback;
 
 const OUTPUT_PATH = path.resolve(__dirname, '../build/basic-test');
@@ -128,7 +128,7 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
+          new ModifySourcePlugin({
             debug: true,
             rules: [
               {
@@ -181,7 +181,7 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
+          new ModifySourcePlugin({
             rules: [
               {
                 test: /one-module\.js$/,
@@ -231,7 +231,7 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
+          new ModifySourcePlugin({
             rules: [
               {
                 test: /two-module\.js$/,
@@ -281,7 +281,7 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
+          new ModifySourcePlugin({
             rules: [
               {
                 test: /.+\.js$/,
@@ -335,7 +335,7 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
+          new ModifySourcePlugin({
             debug: true,
             rules: [
               {

@@ -12,9 +12,9 @@ export type Options = {
   rules: Rule[];
 };
 
-const PLUGIN_NAME = 'ModifyModuleSourcePlugin';
+const PLUGIN_NAME = 'ModifySourcePlugin';
 
-export class ModifyModuleSourcePlugin {
+export class ModifySourcePlugin {
   constructor(protected readonly options: Options) {}
 
   public apply(compiler: Compiler): void {
