@@ -49,7 +49,7 @@ module.exports = {
 
 ## Options
 
-### `test`
+### `rules[].test`
 
 Type: `RegExp | ((module: webpack.NormalModule) => boolean)`
 
@@ -57,7 +57,7 @@ Type: `RegExp | ((module: webpack.NormalModule) => boolean)`
 
 `test` is RegExp or function, which used to determinate which modules should be modified.
 
-`RegExp` will be applied to `NormalModule.request`.
+`RegExp` will be applied to full module path (based on `userRequest`).
 
 `function` will be applied to `NormalModule`.
 
@@ -67,7 +67,11 @@ Type: `RegExp | ((module: webpack.NormalModule) => boolean)`
 module.exports = {
   plugins: [
     new ModifySourcePlugin({
-      test: /index\.js$/
+      rules: [
+        {
+          test: /index\.js$/
+        }
+      ]
     })
   ]
 };
@@ -79,22 +83,26 @@ module.exports = {
 module.exports = {
   plugins: [
     new ModifySourcePlugin({
-      test: module =>
-        module.source().source().includes('my-secret-module-marker')
+      rules: [
+        {
+          test: module =>
+            module.source().source().includes('my-secret-module-marker')
+        }
+      ]
     })
   ]
 };
 ```
 
-### `modify`
+### `rules[].modify`
 
-Type: `(source: string, fileName: string) => string`
+Type: `(source: string, filename: string) => string`
 
 `Required`
 
 Function accept a source and filename. Should return a modified source.
 
-WARNING: modify function should make JavaScript compatible changes, for example all unsupported syntax will break your build or create errors in runtime.
+WARNING: modify function should make syntax compatible changes, for example all unsupported syntax will break your build or create errors in runtime.
 
 #### Example
 
@@ -102,10 +110,14 @@ WARNING: modify function should make JavaScript compatible changes, for example 
 module.exports = {
   plugins: [
     new ModifySourcePlugin({
-      test: /my-file\.js$/,
-      modify: (src, filename) =>
-        src +
-        `\n\n// This file (${filename}) is written by me. All rights reserved`
+      rules: [
+        {
+          test: /my-file\.js$/,
+          modify: (src, filename) =>
+            src +
+            `\n\n// This file (${filename}) is written by me. All rights reserved`
+        }
+      ]
     })
   ]
 };
@@ -117,9 +129,17 @@ module.exports = {
 module.exports = {
   plugins: [
     new ModifySourcePlugin({
-      test: /my-file\.js$/,
-      modify: src => src + `haha I break your build LOL`
+      rules: [
+        {
+          test: /my-file\.js$/,
+          modify: src => src + `haha I break your build LOL`
+        }
+      ]
     })
   ]
 };
 ```
+
+### `debug`
+
+Type: `boolean`

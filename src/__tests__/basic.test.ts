@@ -362,4 +362,46 @@ describe('ModifyModuleSourcePlugin', () => {
       ]
     );
   });
+
+  it('modifies external css file', done => {
+    testPlugin(
+      {
+        mode: 'development',
+        entry: path.join(__dirname, 'fixtures/index-ext-css.js'),
+        output: {
+          path: OUTPUT_PATH,
+          filename: OUTPUT_BUNDLE
+        },
+        plugins: [
+          new ModifySourcePlugin({
+            debug: true,
+            rules: [
+              {
+                test: /node_modules\/modern-normalize\/modern-normalize\.css$/,
+                modify: (src, file) =>
+                  src + `.myExtraClass { background: gray; /* ${file} */ }`
+              }
+            ]
+          })
+        ],
+        module: {
+          rules: [
+            {
+              test: /\.css$/i,
+              use: ['style-loader', 'css-loader']
+            }
+          ]
+        }
+      },
+      done,
+      [],
+      [
+        [/\.myExtraClass \{ background: gray; \/\* ext-css\.css \*\/ }/g, 0],
+        [
+          /\.myExtraClass \{ background: gray; \/\* modern-normalize\.css \*\/ }/g,
+          1
+        ]
+      ]
+    );
+  });
 });

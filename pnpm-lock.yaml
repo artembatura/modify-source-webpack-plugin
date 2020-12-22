@@ -17,6 +17,7 @@ devDependencies:
   husky: 4.3.0
   jest: 26.6.3
   lint-staged: 10.5.2
+  modern-normalize: 1.0.0
   npm-run-all: 4.1.5
   prettier: 2.2.0
   rimraf: 3.0.2
@@ -4009,6 +4010,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+  /modern-normalize/1.0.0:
+    dev: true
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-1lM+BMLGuDfsdwf3rsgBSrxJwAZHFIrQ8YR61xIqdHo0uNKI9M52wNpHSrliZATJp51On6JD0AfRxd4YGSU0lw==
   /ms/2.0.0:
     dev: true
     resolution:
@@ -5983,6 +5990,7 @@ specifiers:
   jest: ^26.6.3
   lint-staged: ^10.5.2
   loader-utils: ^2.0.0
+  modern-normalize: ^1.0.0
   npm-run-all: ^4.1.5
   prettier: ^2.2.0
   rimraf: ^3.0.2

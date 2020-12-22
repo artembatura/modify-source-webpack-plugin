@@ -4,7 +4,7 @@ import { NormalModule } from 'webpack';
 
 export interface Rule {
   test: RegExp | ((module: NormalModule) => boolean);
-  modify: (source: string, fileName: string) => string;
+  modify: (source: string, filename: string) => string;
 }
 
 export type Options = {
@@ -35,7 +35,9 @@ export class ModifySourcePlugin {
               ? 0
               : userRequest.lastIndexOf('!') + 1;
 
-          const moduleRequest = userRequest.substr(startIndex);
+          const moduleRequest = userRequest
+            .substr(startIndex)
+            .replace(/\\/g, '/');
 
           if (modifiedModules.includes(moduleRequest)) {
             return;
@@ -54,7 +56,7 @@ export class ModifySourcePlugin {
             if (debug && isMatched) {
               // eslint-disable-next-line no-console
               console.log(
-                `[ModifyModuleSourcePlugin] File ${moduleRequest} is matched, apply modifications. (ruleIndex: ${ruleIndex})`
+                `[ModifySourcePlugin][${ruleIndex}] File ${moduleRequest} is matched - add loader for this module.`
               );
             }
 
