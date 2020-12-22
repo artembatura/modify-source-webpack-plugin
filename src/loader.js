@@ -7,8 +7,8 @@ const schema = {
     filename: {
       type: 'string'
     },
-    modify: {
-      instanceof: 'Function'
+    ruleIndex: {
+      type: 'number'
     }
   },
   additionalProperties: false
@@ -22,5 +22,15 @@ module.exports = function modifyModuleSourceLoader(source) {
     baseDataPath: 'options'
   });
 
-  return options.modify(source, options.filename);
+  const modify = global.modifyFunctions
+    ? global.modifyFunctions[options.ruleIndex]
+    : null;
+
+  if (!modify) {
+    throw new Error(
+      `global.modifyFunctions[${options.ruleIndex}] is not defined.`
+    );
+  }
+
+  return modify(source, options.filename);
 };

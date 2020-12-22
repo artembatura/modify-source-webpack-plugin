@@ -28,13 +28,13 @@ yarn add -D modify-source-webpack-plugin
 ### ES6/TypeScript
 
 ```js
-import { ModifyModuleSourcePlugin } from 'modify-source-webpack-plugin';
+import { ModifySourcePlugin } from 'modify-source-webpack-plugin';
 ```
 
 ### CJS
 
 ```js
-const { ModifyModuleSourcePlugin } = require('modify-source-webpack-plugin');
+const { ModifySourcePlugin } = require('modify-source-webpack-plugin');
 ```
 
 ## Usage
@@ -43,13 +43,13 @@ const { ModifyModuleSourcePlugin } = require('modify-source-webpack-plugin');
 
 ```js
 module.exports = {
-  plugins: [new ModifyModuleSourcePlugin(options)]
+  plugins: [new ModifySourcePlugin(options)]
 };
 ```
 
 ## Options
 
-### `test`
+### `rules[].test`
 
 Type: `RegExp | ((module: webpack.NormalModule) => boolean)`
 
@@ -57,7 +57,7 @@ Type: `RegExp | ((module: webpack.NormalModule) => boolean)`
 
 `test` is RegExp or function, which used to determinate which modules should be modified.
 
-`RegExp` will be applied to `NormalModule.request`.
+`RegExp` will be applied to full module path (based on `userRequest`).
 
 `function` will be applied to `NormalModule`.
 
@@ -66,8 +66,12 @@ Type: `RegExp | ((module: webpack.NormalModule) => boolean)`
 ```js
 module.exports = {
   plugins: [
-    new ModifyModuleSourcePlugin({
-      test: /index\.js$/
+    new ModifySourcePlugin({
+      rules: [
+        {
+          test: /index\.js$/
+        }
+      ]
     })
   ]
 };
@@ -78,34 +82,42 @@ module.exports = {
 ```js
 module.exports = {
   plugins: [
-    new ModifyModuleSourcePlugin({
-      test: module =>
-        module.source().source().includes('my-secret-module-marker')
+    new ModifySourcePlugin({
+      rules: [
+        {
+          test: module =>
+            module.source().source().includes('my-secret-module-marker')
+        }
+      ]
     })
   ]
 };
 ```
 
-### `modify`
+### `rules[].modify`
 
-Type: `(source: string, fileName: string) => string`
+Type: `(source: string, filename: string) => string`
 
 `Required`
 
 Function accept a source and filename. Should return a modified source.
 
-WARNING: modify function should make JavaScript compatible changes, for example all unsupported syntax will break your build or create errors in runtime.
+WARNING: modify function should make syntax compatible changes, for example all unsupported syntax will break your build or create errors in runtime.
 
 #### Example
 
 ```js
 module.exports = {
   plugins: [
-    new ModifyModuleSourcePlugin({
-      test: /my-file\.js$/,
-      modify: (src, filename) =>
-        src +
-        `\n\n// This file (${filename}) is written by me. All rights reserved`
+    new ModifySourcePlugin({
+      rules: [
+        {
+          test: /my-file\.js$/,
+          modify: (src, filename) =>
+            src +
+            `\n\n// This file (${filename}) is written by me. All rights reserved`
+        }
+      ]
     })
   ]
 };
@@ -116,14 +128,18 @@ module.exports = {
 ```js
 module.exports = {
   plugins: [
-    new ModifyModuleSourcePlugin({
-      test: /my-file\.js$/,
-      modify: src => src + `haha I break your build LOL`
+    new ModifySourcePlugin({
+      rules: [
+        {
+          test: /my-file\.js$/,
+          modify: src => src + `haha I break your build LOL`
+        }
+      ]
     })
   ]
 };
 ```
 
-## Options array
+### `debug`
 
-TODO: add docs and tests
+Type: `boolean`

@@ -1,1 +1,1 @@
-export * from './ModifyModuleSourcePlugin';
+export * from './ModifySourcePlugin';

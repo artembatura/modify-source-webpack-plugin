@@ -3,7 +3,7 @@ import path from 'path';
 import rimraf from 'rimraf';
 import webpack, { Configuration } from 'webpack';
 
-import { ModifyModuleSourcePlugin } from '../ModifyModuleSourcePlugin';
+import { ModifySourcePlugin } from '../ModifySourcePlugin';
 import DoneCallback = jest.DoneCallback;
 
 const OUTPUT_PATH = path.resolve(__dirname, '../build/basic-test');
@@ -17,6 +17,7 @@ function testPlugin(
     shouldContain?: Array<string | [RegExp, number]>;
     shouldEqual?: string;
   }>,
+  expectBundleContent?: Array<string | [RegExp, number]>,
   expectErrors?: boolean,
   expectWarnings?: boolean
 ): void {
@@ -75,25 +76,27 @@ function testPlugin(
       .readFileSync(OUTPUT_PATH + '/' + OUTPUT_BUNDLE)
       .toString();
 
-    const expectBundleContent: Array<
-      Array<string | [RegExp, number]> | undefined
-    > = expectModulesContent.map(expectMeta => expectMeta.shouldContain);
+    const _expectBundleContent =
+      expectBundleContent ||
+      expectModulesContent.map(expectMeta => expectMeta.shouldContain).flat();
 
     // also check bundle content
-    expectBundleContent.forEach(shouldContain => {
-      shouldContain?.forEach(expectedContent => {
-        if (Array.isArray(expectedContent)) {
-          const [regExp, matchCount] = expectedContent;
+    _expectBundleContent.forEach(expectedContent => {
+      if (!expectedContent) {
+        return;
+      }
 
-          if (matchCount === 0) {
-            return expect(bundleContent.match(regExp)).toBe(null);
-          }
+      if (Array.isArray(expectedContent)) {
+        const [regExp, matchCount] = expectedContent;
 
-          return expect(bundleContent.match(regExp)).toHaveLength(matchCount);
+        if (matchCount === 0) {
+          return expect(bundleContent.match(regExp)).toBe(null);
         }
 
-        expect(bundleContent).toContain(expectedContent);
-      });
+        return expect(bundleContent.match(regExp)).toHaveLength(matchCount);
+      }
+
+      expect(bundleContent).toContain(expectedContent);
     });
 
     done();
@@ -106,6 +109,9 @@ function getModulePath(fileName: string): string {
 
 const modifyModuleSrc = (src: string, fileName: string) =>
   src + `// [::SOME_UNIQUE_STRING][${fileName}]`;
+
+const modifyCssSrc = (src: string, fileName: string) =>
+  src + `/* [::SOME_UNIQUE_STRING][${fileName}] */`;
 
 describe('ModifyModuleSourcePlugin', () => {
   beforeEach(done => {
@@ -122,9 +128,14 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
-            test: /index\.js$/,
-            modify: modifyModuleSrc
+          new ModifySourcePlugin({
+            debug: true,
+            rules: [
+              {
+                test: /index\.js$/,
+                modify: modifyModuleSrc
+              }
+            ]
           })
         ]
       },
@@ -170,9 +181,13 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
-            test: /one-module\.js$/,
-            modify: modifyModuleSrc
+          new ModifySourcePlugin({
+            rules: [
+              {
+                test: /one-module\.js$/,
+                modify: modifyModuleSrc
+              }
+            ]
           })
         ]
       },
@@ -216,9 +231,13 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
-            test: /two-module\.js$/,
-            modify: modifyModuleSrc
+          new ModifySourcePlugin({
+            rules: [
+              {
+                test: /two-module\.js$/,
+                modify: modifyModuleSrc
+              }
+            ]
           })
         ]
       },
@@ -262,9 +281,13 @@ describe('ModifyModuleSourcePlugin', () => {
           filename: OUTPUT_BUNDLE
         },
         plugins: [
-          new ModifyModuleSourcePlugin({
-            test: /.+\.js$/,
-            modify: modifyModuleSrc
+          new ModifySourcePlugin({
+            rules: [
+              {
+                test: /.+\.js$/,
+                modify: modifyModuleSrc
+              }
+            ]
           })
         ]
       },
@@ -298,6 +321,86 @@ describe('ModifyModuleSourcePlugin', () => {
             'two-module.js'
           )
         }
+      ]
+    );
+  });
+
+  it('modifies css file', done => {
+    testPlugin(
+      {
+        mode: 'development',
+        entry: path.join(__dirname, 'fixtures/index-css.js'),
+        output: {
+          path: OUTPUT_PATH,
+          filename: OUTPUT_BUNDLE
+        },
+        plugins: [
+          new ModifySourcePlugin({
+            debug: true,
+            rules: [
+              {
+                test: /\.css$/,
+                modify: modifyCssSrc
+              }
+            ]
+          })
+        ],
+        module: {
+          rules: [
+            {
+              test: /\.css$/i,
+              use: ['style-loader', 'css-loader']
+            }
+          ]
+        }
+      },
+      done,
+      [],
+      [
+        [/\/\* \[::SOME_UNIQUE_STRING]\[index-css\.js] \*\//g, 0],
+        [/\/\* \[::SOME_UNIQUE_STRING]\[css-file\.css] \*\//g, 1]
+      ]
+    );
+  });
+
+  it('modifies external css file', done => {
+    testPlugin(
+      {
+        mode: 'development',
+        entry: path.join(__dirname, 'fixtures/index-ext-css.js'),
+        output: {
+          path: OUTPUT_PATH,
+          filename: OUTPUT_BUNDLE
+        },
+        plugins: [
+          new ModifySourcePlugin({
+            debug: true,
+            rules: [
+              {
+                test: /node_modules\/modern-normalize\/modern-normalize\.css$/,
+                modify: (src, file) =>
+                  src + `.myExtraClass { background: gray; /* ${file} */ }`
+              }
+            ]
+          })
+        ],
+        module: {
+          rules: [
+            {
+              test: /\.css$/i,
+              use: ['style-loader', 'css-loader']
+            }
+          ]
+        }
+      },
+      done,
+      [],
+      [
+        [/\.myExtraClass \{ background: gray; \/\* ext-css\.css \*\/ }/g, 0],
+        [
+          /\.myExtraClass \{ background: gray; \/\* modern-normalize\.css \*\/ }/g,
+          1
+        ]
       ]
     );
   });
