@@ -1,6 +1,6 @@
 {
   "include": ["src"],
-  "exclude": ["node_modules", "build", "**/__tests__/*.test.ts"],
+  "exclude": ["node_modules", "build", "**/__tests__"],
   "compilerOptions": {
     "allowJs": true,
     "rootDir": "src",
