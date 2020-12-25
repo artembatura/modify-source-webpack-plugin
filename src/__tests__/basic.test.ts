@@ -6,7 +6,7 @@ import webpack, { Configuration } from 'webpack';
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
 import DoneCallback = jest.DoneCallback;
 
-const OUTPUT_PATH = path.resolve(__dirname, '../build/basic-test');
+const OUTPUT_PATH = path.resolve(__dirname, './build/basic-test');
 const OUTPUT_BUNDLE = 'bundle.js';
 
 function testPlugin(
@@ -129,7 +129,6 @@ describe('ModifyModuleSourcePlugin', () => {
         },
         plugins: [
           new ModifySourcePlugin({
-            debug: true,
             rules: [
               {
                 test: /index\.js$/,
@@ -336,7 +335,6 @@ describe('ModifyModuleSourcePlugin', () => {
         },
         plugins: [
           new ModifySourcePlugin({
-            debug: true,
             rules: [
               {
                 test: /\.css$/,
@@ -374,7 +372,6 @@ describe('ModifyModuleSourcePlugin', () => {
         },
         plugins: [
           new ModifySourcePlugin({
-            debug: true,
             rules: [
               {
                 test: /node_modules\/modern-normalize\/modern-normalize\.css$/,
