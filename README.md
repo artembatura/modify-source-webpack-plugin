@@ -9,18 +9,18 @@ Webpack Plugin for modifying modules source.
 | ^5.0.0          | ^2.0.0         | <p align="center">✅</p> | [master](https://github.com/artemirq/modify-source-webpack-plugin/tree/master) |
 | ^4.37.0         | ^1.1.0         | <p align="center">✅</p> | [1.x](https://github.com/artemirq/modify-source-webpack-plugin/tree/1.x)       |
 
-## Installation
+## Installation (for v2)
 
 ### NPM
 
 ```
-npm i -D modify-source-webpack-plugin
+npm i -D modify-source-webpack-plugin@next
 ```
 
 ### Yarn
 
 ```
-yarn add -D modify-source-webpack-plugin
+yarn add -D modify-source-webpack-plugin@next
 ```
 
 ## Import
