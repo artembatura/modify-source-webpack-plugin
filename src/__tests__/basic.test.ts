@@ -51,7 +51,11 @@ function testPlugin(
 
       expect(moduleMeta).toBeTruthy();
 
-      const moduleSource = moduleMeta?.originalSource().source().toString();
+      const originalSource = moduleMeta?.originalSource();
+
+      const moduleSource = originalSource
+        ? originalSource.source().toString()
+        : undefined;
 
       if (shouldEqual) {
         expect(moduleSource).toEqual(shouldEqual);
@@ -393,9 +397,9 @@ describe('ModifyModuleSourcePlugin', () => {
       done,
       [],
       [
-        [/\.myExtraClass \{ background: gray; \/\* ext-css\.css \*\/ }/g, 0],
+        [/\.myExtraClass { background: gray; \/\* ext-css\.css \*\/ }/g, 0],
         [
-          /\.myExtraClass \{ background: gray; \/\* modern-normalize\.css \*\/ }/g,
+          /\.myExtraClass { background: gray; \/\* modern-normalize\.css \*\/ }/g,
           1
         ]
       ]

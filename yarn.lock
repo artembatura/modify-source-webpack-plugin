@@ -774,7 +774,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:26.x, @types/jest@npm:^26.0.15":
+"@types/jest@npm:26.x, @types/jest@npm:^26.0.20":
   version: 26.0.20
   resolution: "@types/jest@npm:26.0.20"
   dependencies:
@@ -805,7 +805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^14.14.10":
+"@types/node@npm:*, @types/node@npm:^14.14.21":
   version: 14.14.21
   resolution: "@types/node@npm:14.14.21"
   checksum: b659823ffa01684ff2cb4edf0b70ea76d7eae6cd86af43de62ae6b460c174161850fb75a1be50ab60c4519c14babd4ec430ddbbe6689e341073ba10ff106311c
@@ -866,7 +866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^4.8.2":
+"@typescript-eslint/eslint-plugin@npm:^4.13.0":
   version: 4.13.0
   resolution: "@typescript-eslint/eslint-plugin@npm:4.13.0"
   dependencies:
@@ -904,7 +904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^4.8.2":
+"@typescript-eslint/parser@npm:^4.13.0":
   version: 4.13.0
   resolution: "@typescript-eslint/parser@npm:4.13.0"
   dependencies:
@@ -2417,16 +2417,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^6.15.0":
-  version: 6.15.0
-  resolution: "eslint-config-prettier@npm:6.15.0"
-  dependencies:
-    get-stdin: ^6.0.0
+"eslint-config-prettier@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "eslint-config-prettier@npm:7.1.0"
   peerDependencies:
-    eslint: ">=3.14.1"
+    eslint: ">=7.0.0"
   bin:
-    eslint-config-prettier-check: bin/cli.js
-  checksum: a790bc61699e43a2edc5453488576cd977fad3b3cf99c129c10760ce6970d422923fddf80b65b2b10a93c00af0180a854e4b7824cc268e5957826cbe5b969e90
+    eslint-config-prettier: bin/cli.js
+  checksum: 968a1166c3c14ac769b5bd30192dfc81f02319e565a907f1299ae1322eccf836ebaab5a7ebdb5ceefc35b65f5c9d781e5bb92a72bf299d2dde4353b5a828a0f3
   languageName: node
   linkType: hard
 
@@ -2497,7 +2495,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^3.1.4":
+"eslint-plugin-prettier@npm:^3.3.1":
   version: 3.3.1
   resolution: "eslint-plugin-prettier@npm:3.3.1"
   dependencies:
@@ -2552,7 +2550,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.14.0":
+"eslint@npm:^7.18.0":
   version: 7.18.0
   resolution: "eslint@npm:7.18.0"
   dependencies:
@@ -3088,13 +3086,6 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"get-stdin@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "get-stdin@npm:6.0.0"
-  checksum: b51d664838aef7f8353dc57371ce59cea54d8d584fec015a9d89d24561e95b97806d5b5ba120bc81574c9ed63cb3e210176ffa0ff9263c7e7ba4d56d0fe54913
-  languageName: node
-  linkType: hard
-
 "get-stream@npm:^4.0.0":
   version: 4.1.0
   resolution: "get-stream@npm:4.1.0"
@@ -3337,7 +3328,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"husky@npm:^4.3.0":
+"husky@npm:^4.3.8":
   version: 4.3.8
   resolution: "husky@npm:4.3.8"
   dependencies:
@@ -4521,7 +4512,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^10.5.2":
+"lint-staged@npm:^10.5.3":
   version: 10.5.3
   resolution: "lint-staged@npm:10.5.3"
   dependencies:
@@ -4866,31 +4857,32 @@ fsevents@^2.1.2:
   version: 0.0.0-use.local
   resolution: "modify-source-webpack-plugin@workspace:."
   dependencies:
-    "@types/jest": ^26.0.15
-    "@types/node": ^14.14.10
+    "@types/jest": ^26.0.20
+    "@types/node": ^14.14.21
     "@types/rimraf": ^3.0.0
-    "@typescript-eslint/eslint-plugin": ^4.8.2
-    "@typescript-eslint/parser": ^4.8.2
+    "@typescript-eslint/eslint-plugin": ^4.13.0
+    "@typescript-eslint/parser": ^4.13.0
     css-loader: ^5.0.1
-    eslint: ^7.14.0
-    eslint-config-prettier: ^6.15.0
+    eslint: ^7.18.0
+    eslint-config-prettier: ^7.1.0
     eslint-formatter-pretty: ^4.0.0
+    eslint-import-resolver-node: ^0.3.4
     eslint-plugin-import: ^2.22.1
     eslint-plugin-import-helpers: ^1.1.0
-    eslint-plugin-prettier: ^3.1.4
-    husky: ^4.3.0
+    eslint-plugin-prettier: ^3.3.1
+    husky: ^4.3.8
     jest: ^26.6.3
-    lint-staged: ^10.5.2
+    lint-staged: ^10.5.3
     loader-utils: ^2.0.0
     modern-normalize: ^1.0.0
     npm-run-all: ^4.1.5
-    prettier: ^2.2.0
+    prettier: ^2.2.1
     rimraf: ^3.0.2
     schema-utils: ^3.0.0
     style-loader: ^2.0.0
     ts-jest: ^26.4.4
-    typescript: ^4.1.2
-    webpack: ^5.10.0
+    typescript: ^4.1.3
+    webpack: ^5.15.0
   peerDependencies:
     webpack: ^5.0.0
   languageName: unknown
@@ -5661,7 +5653,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.2.0":
+"prettier@npm:^2.2.1":
   version: 2.2.1
   resolution: "prettier@npm:2.2.1"
   bin:
@@ -6984,7 +6976,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-typescript@^4.1.2:
+typescript@^4.1.3:
   version: 4.1.3
   resolution: "typescript@npm:4.1.3"
   bin:
@@ -6994,7 +6986,7 @@ typescript@^4.1.2:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.1.2#builtin<compat/typescript>":
+"typescript@patch:typescript@^4.1.3#builtin<compat/typescript>":
   version: 4.1.3
   resolution: "typescript@patch:typescript@npm%3A4.1.3#builtin<compat/typescript>::version=4.1.3&hash=cc6730"
   bin:
@@ -7181,7 +7173,7 @@ typescript@^4.1.2:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.10.0":
+"webpack@npm:^5.15.0":
   version: 5.15.0
   resolution: "webpack@npm:5.15.0"
   dependencies:

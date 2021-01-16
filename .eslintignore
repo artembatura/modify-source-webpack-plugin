@@ -1,4 +1,6 @@
 build
 node_modules
-examples
+examples/*
+!examples/__tests__
 *.d.ts
+.pnp.js
