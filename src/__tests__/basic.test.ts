@@ -4,6 +4,9 @@ import rimraf from 'rimraf';
 import webpack, { Configuration } from 'webpack';
 
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
+
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
+
 import DoneCallback = jest.DoneCallback;
 
 const OUTPUT_PATH = path.resolve(__dirname, './build/basic-test');
@@ -347,9 +350,17 @@ describe('ModifyModuleSourcePlugin', () => {
           rules: [
             {
               test: /\.css$/i,
-              use: ['style-loader', 'css-loader']
+              use: ['style-loader', 'css-loader'].map(packageName =>
+                require.resolve(packageName)
+              )
             }
           ]
+        },
+        resolve: {
+          plugins: [PnpWebpackPlugin]
+        },
+        resolveLoader: {
+          plugins: [PnpWebpackPlugin.moduleLoader(module)]
         }
       },
       done,
@@ -385,9 +396,17 @@ describe('ModifyModuleSourcePlugin', () => {
           rules: [
             {
               test: /\.css$/i,
-              use: ['style-loader', 'css-loader']
+              use: ['style-loader', 'css-loader'].map(packageName =>
+                require.resolve(packageName)
+              )
             }
           ]
+        },
+        resolve: {
+          plugins: [PnpWebpackPlugin]
+        },
+        resolveLoader: {
+          plugins: [PnpWebpackPlugin.moduleLoader(module)]
         }
       },
       done,

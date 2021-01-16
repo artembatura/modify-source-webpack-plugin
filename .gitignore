@@ -6,6 +6,13 @@ yarn-error.log
 
 /.changelog
 
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
 build
 
 .env
