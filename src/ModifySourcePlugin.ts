@@ -18,7 +18,7 @@ export class ModifySourcePlugin {
   constructor(protected readonly options: Options) {}
 
   public apply(compiler: Compiler): void {
-    const { rules, debug } = this.options;
+    const { rules, debug, fullPathname } = this.options;
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
       const modifiedModules: (string | number)[] = [];
@@ -69,7 +69,7 @@ export class ModifySourcePlugin {
               }[]).push({
                 loader: require.resolve('./loader.js'),
                 options: {
-                  filename: path.basename(moduleRequest),
+                  filename: fullPathname ? moduleRequest : path.basename(moduleRequest),
                   ruleIndex
                 }
               });
