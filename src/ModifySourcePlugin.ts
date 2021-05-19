@@ -43,7 +43,7 @@ const PLUGIN_NAME = 'ModifySourcePlugin';
 export class ModifySourcePlugin {
   constructor(protected readonly options: Options) {
     validate(validationSchema, options, {
-      name: 'ModifySourcePlugin'
+      name: PLUGIN_NAME
     });
   }
 
@@ -86,7 +86,7 @@ export class ModifySourcePlugin {
           if (debug && isMatched) {
             // eslint-disable-next-line no-console
             console.log(
-              `[ModifySourcePlugin][${ruleIndex}] File ${moduleRequest} is matched - add loader for this module.`
+              `[${PLUGIN_NAME}] Add loader for module ${moduleRequest} at index ${ruleIndex}.`
             );
           }
 

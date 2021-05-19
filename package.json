@@ -80,9 +80,21 @@
   "keywords": [
     "webpack",
     "plugin",
+    "hooks",
     "module",
+    "file",
     "source",
     "modify",
-    "edit"
+    "edit",
+    "loader",
+    "compilation",
+    "dependency",
+    "value",
+    "rebuild",
+    "parse",
+    "re-parse",
+    "rebuildModule",
+    "addDependency",
+    "buildModule"
   ]
 }
