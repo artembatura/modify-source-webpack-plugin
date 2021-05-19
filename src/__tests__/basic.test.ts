@@ -116,11 +116,11 @@ function getModulePath(fileName: string): string {
   return path.join(__dirname, `fixtures/${fileName}`);
 }
 
-const modifyModuleSrc = (src: string, fileName: string) =>
-  src + `// [::SOME_UNIQUE_STRING][${fileName}]`;
+const modifyModuleSrc = (src: string, filePath: string) =>
+  src + `// [::SOME_UNIQUE_STRING][${path.basename(filePath)}]`;
 
-const modifyCssSrc = (src: string, fileName: string) =>
-  src + `/* [::SOME_UNIQUE_STRING][${fileName}] */`;
+const modifyCssSrc = (src: string, filePath: string) =>
+  src + `/* [::SOME_UNIQUE_STRING][${path.basename(filePath)}] */`;
 
 function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
   beforeEach(done => {
@@ -402,9 +402,12 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
             rules: [
               {
                 test: /node_modules\/modern-normalize\/modern-normalize\.css$/,
-                modify: (src, file) =>
-                  src + `.myExtraClass { background: gray; /* ${file} */ }`
-              }
+                modify: (src: any, filePath: any) =>
+                  src +
+                  `.myExtraClass { background: gray; /* ${path.basename(
+                    filePath
+                  )} */ }`
+              } as any
             ]
           })
         ],

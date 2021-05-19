@@ -1,10 +1,9 @@
-import path from 'path';
 import type { Compiler } from 'webpack';
 import { NormalModule } from 'webpack';
 
 export interface Rule {
   test: RegExp | ((module: NormalModule) => boolean);
-  modify: (source: string, filename: string) => string;
+  modify: (source: string, path: string) => string;
 }
 
 export type Options = {
@@ -69,7 +68,7 @@ export class ModifySourcePlugin {
             }[]).push({
               loader: require.resolve('./loader.js'),
               options: {
-                filename: path.basename(moduleRequest),
+                path: moduleRequest,
                 ruleIndex
               }
             });
