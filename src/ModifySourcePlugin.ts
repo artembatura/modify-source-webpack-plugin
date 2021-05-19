@@ -1,6 +1,8 @@
 import type { Compiler } from 'webpack';
 import { NormalModule } from 'webpack';
 
+const { validate } = require('schema-utils');
+
 export interface Rule {
   test: RegExp | ((module: NormalModule) => boolean);
   modify: (source: string, path: string) => string;
@@ -11,10 +13,39 @@ export type Options = {
   rules: Rule[];
 };
 
+const validationSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    debug: {
+      type: 'boolean'
+    },
+    rules: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          test: {
+            anyOf: [{ instanceof: 'Function' }, { instanceof: 'RegExp' }]
+          },
+          modify: {
+            instanceof: 'Function'
+          }
+        }
+      }
+    }
+  }
+};
+
 const PLUGIN_NAME = 'ModifySourcePlugin';
 
 export class ModifySourcePlugin {
-  constructor(protected readonly options: Options) {}
+  constructor(protected readonly options: Options) {
+    validate(validationSchema, options, {
+      name: 'ModifySourcePlugin'
+    });
+  }
 
   public apply(compiler: Compiler): void {
     const { rules, debug } = this.options;
