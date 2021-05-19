@@ -4,12 +4,12 @@ Webpack Plugin for modifying modules source.
 
 ## Compatibility
 
-| Webpack Version | Plugin version | Status                   | Branch                                                                         |
-| --------------- | -------------- | ------------------------ | ------------------------------------------------------------------------------ |
-| ^5.0.0          | ^2.0.0         | <p align="center">✅</p> | [master](https://github.com/artemirq/modify-source-webpack-plugin/tree/master) |
-| ^4.37.0         | ^1.1.0         | <p align="center">✅</p> | [1.x](https://github.com/artemirq/modify-source-webpack-plugin/tree/1.x)       |
+| Webpack Version | Plugin version | Status                   |
+| --------------- | -------------- | ------------------------ |
+| ^5.0.0          | ^3.0.0         | <p align="center">✅</p> |
+| ^4.37.0         | ^3.0.0         | <p align="center">✅</p> |
 
-## Installation (webpack 5)
+## Installation
 
 ### NPM
 
@@ -21,20 +21,6 @@ npm i -D modify-source-webpack-plugin@next
 
 ```
 yarn add -D modify-source-webpack-plugin@next
-```
-
-## Installation (webpack 4)
-
-### NPM
-
-```
-npm i -D modify-source-webpack-plugin
-```
-
-### Yarn
-
-```
-yarn add -D modify-source-webpack-plugin
 ```
 
 ## Import
@@ -157,3 +143,5 @@ module.exports = {
 ### `debug`
 
 Type: `boolean`
+
+For slightly easier debugging. Print logs in the console.
