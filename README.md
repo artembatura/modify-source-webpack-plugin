@@ -96,11 +96,11 @@ module.exports = {
 
 ### `rules[].modify`
 
-Type: `(source: string, filename: string) => string`
+Type: `(source: string, path: string) => string`
 
 `Required`
 
-Function accept a source and filename. Should return a modified source.
+Function accept a source and file path. Should return a modified source.
 
 WARNING: modify function should make syntax compatible changes, for example all unsupported syntax will break your build or create errors in runtime.
 
@@ -113,9 +113,9 @@ module.exports = {
       rules: [
         {
           test: /my-file\.js$/,
-          modify: (src, filename) =>
+          modify: (src, path) =>
             src +
-            `\n\n// This file (${filename}) is written by me. All rights reserved`
+            `\n\n// This file (${path}) is written by me. All rights reserved`
         }
       ]
     })
