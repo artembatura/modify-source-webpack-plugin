@@ -4,7 +4,7 @@ const { validate } = require('schema-utils');
 const schema = {
   type: 'object',
   properties: {
-    filename: {
+    path: {
       type: 'string'
     },
     ruleIndex: {
@@ -18,8 +18,7 @@ module.exports = function modifyModuleSourceLoader(source) {
   const options = getOptions(this);
 
   validate(schema, options, {
-    name: 'ModifyModuleSourceLoader',
-    baseDataPath: 'options'
+    name: 'ModifySourcePlugin Loader'
   });
 
   const modify = global.modifyFunctions
@@ -28,9 +27,9 @@ module.exports = function modifyModuleSourceLoader(source) {
 
   if (!modify) {
     throw new Error(
-      `global.modifyFunctions[${options.ruleIndex}] is not defined.`
+      `Modify function at index ${options.ruleIndex} is not defined in global space.`
     );
   }
 
-  return modify(source, options.filename);
+  return modify(source, options.path);
 };

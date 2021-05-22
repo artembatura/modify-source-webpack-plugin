@@ -1,6 +1,6 @@
 {
   "name": "modify-source-webpack-plugin",
-  "version": "2.0.0-beta.7",
+  "version": "3.0.0-rc.0",
   "description": "Webpack Plugin for modifying modules source",
   "author": {
     "name": "Artem Batura",
@@ -32,6 +32,7 @@
     "@types/json-schema": "^7.0.6",
     "@types/node": "^14.14.21",
     "@types/rimraf": "^3.0.0",
+    "@types/webpack4": "npm:@types/webpack@5.28.0",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "css-loader": "^5.0.1",
@@ -47,23 +48,25 @@
     "lint-staged": "^10.5.3",
     "modern-normalize": "^1.0.0",
     "npm-run-all": "^4.1.5",
+    "pnp-webpack-plugin": "1.6.4",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "style-loader": "^2.0.0",
     "ts-jest": "^26.4.4",
     "typescript": "^4.1.3",
-    "webpack": "^5.15.0"
+    "webpack": "^5.15.0",
+    "webpack4": "npm:webpack@4.46.0"
   },
   "dependencies": {
     "loader-utils": "^2.0.0",
     "schema-utils": "^3.0.0"
   },
   "peerDependencies": {
-    "webpack": "^5.0.0"
+    "webpack": "^4.37.0 || ^5.0.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pnpx lint-staged"
+      "pre-commit": "yarn lint-staged"
     }
   },
   "lint-staged": {
@@ -77,9 +80,21 @@
   "keywords": [
     "webpack",
     "plugin",
+    "hooks",
     "module",
+    "file",
     "source",
     "modify",
-    "edit"
+    "edit",
+    "loader",
+    "compilation",
+    "dependency",
+    "value",
+    "rebuild",
+    "parse",
+    "re-parse",
+    "rebuildModule",
+    "addDependency",
+    "buildModule"
   ]
 }

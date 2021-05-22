@@ -1,16 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 import rimraf from 'rimraf';
-import webpack, { Configuration } from 'webpack';
+import webpackV5, { Stats } from 'webpack';
+import webpackV4 from 'webpack4';
 
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
+
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
+
 import DoneCallback = jest.DoneCallback;
 
 const OUTPUT_PATH = path.resolve(__dirname, './build/basic-test');
 const OUTPUT_BUNDLE = 'bundle.js';
 
 function testPlugin(
-  webpackConfig: Configuration,
+  webpack: any,
+  config: any,
   done: DoneCallback,
   expectModulesContent: Array<{
     module: string;
@@ -21,7 +26,7 @@ function testPlugin(
   expectErrors?: boolean,
   expectWarnings?: boolean
 ): void {
-  webpack(webpackConfig, (err, stats) => {
+  webpack(config, (err: Record<string, any> | false, stats: Stats) => {
     expect(err).toBeFalsy();
 
     const compilationErrors = (stats?.compilation.errors || []).join('\n');
@@ -111,19 +116,20 @@ function getModulePath(fileName: string): string {
   return path.join(__dirname, `fixtures/${fileName}`);
 }
 
-const modifyModuleSrc = (src: string, fileName: string) =>
-  src + `// [::SOME_UNIQUE_STRING][${fileName}]`;
+const modifyModuleSrc = (src: string, filePath: string) =>
+  src + `// [::SOME_UNIQUE_STRING][${path.basename(filePath)}]`;
 
-const modifyCssSrc = (src: string, fileName: string) =>
-  src + `/* [::SOME_UNIQUE_STRING][${fileName}] */`;
+const modifyCssSrc = (src: string, filePath: string) =>
+  src + `/* [::SOME_UNIQUE_STRING][${path.basename(filePath)}] */`;
 
-describe('ModifyModuleSourcePlugin', () => {
+function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
   beforeEach(done => {
     rimraf(OUTPUT_PATH, done);
   });
 
   it('modifies first module', done => {
     testPlugin(
+      webpack,
       {
         mode: 'development',
         entry: path.join(__dirname, 'fixtures/index.js'),
@@ -176,6 +182,7 @@ describe('ModifyModuleSourcePlugin', () => {
 
   it('modifies only one-module.js by regexp', done => {
     testPlugin(
+      webpack,
       {
         mode: 'development',
         entry: path.join(__dirname, 'fixtures/index.js'),
@@ -226,6 +233,7 @@ describe('ModifyModuleSourcePlugin', () => {
 
   it('modifies only two-module.js by regexp', done => {
     testPlugin(
+      webpack,
       {
         mode: 'development',
         entry: path.join(__dirname, 'fixtures/index.js'),
@@ -276,6 +284,7 @@ describe('ModifyModuleSourcePlugin', () => {
 
   it('modifies all modules', done => {
     testPlugin(
+      webpack,
       {
         mode: 'development',
         entry: path.join(__dirname, 'fixtures/index.js'),
@@ -330,6 +339,7 @@ describe('ModifyModuleSourcePlugin', () => {
 
   it('modifies css file', done => {
     testPlugin(
+      webpack,
       {
         mode: 'development',
         entry: path.join(__dirname, 'fixtures/index-css.js'),
@@ -351,10 +361,22 @@ describe('ModifyModuleSourcePlugin', () => {
           rules: [
             {
               test: /\.css$/i,
-              use: ['style-loader', 'css-loader']
+              use: ['style-loader', 'css-loader'].map(packageName =>
+                require.resolve(packageName)
+              )
             }
           ]
-        }
+        },
+        ...(webpack === webpackV4
+          ? {
+              resolve: {
+                plugins: [PnpWebpackPlugin]
+              },
+              resolveLoader: {
+                plugins: [PnpWebpackPlugin.moduleLoader(module)]
+              }
+            }
+          : {})
       },
       done,
       [],
@@ -367,6 +389,7 @@ describe('ModifyModuleSourcePlugin', () => {
 
   it('modifies external css file', done => {
     testPlugin(
+      webpack,
       {
         mode: 'development',
         entry: path.join(__dirname, 'fixtures/index-ext-css.js'),
@@ -379,9 +402,12 @@ describe('ModifyModuleSourcePlugin', () => {
             rules: [
               {
                 test: /node_modules\/modern-normalize\/modern-normalize\.css$/,
-                modify: (src, file) =>
-                  src + `.myExtraClass { background: gray; /* ${file} */ }`
-              }
+                modify: (src: any, filePath: any) =>
+                  src +
+                  `.myExtraClass { background: gray; /* ${path.basename(
+                    filePath
+                  )} */ }`
+              } as any
             ]
           })
         ],
@@ -389,10 +415,22 @@ describe('ModifyModuleSourcePlugin', () => {
           rules: [
             {
               test: /\.css$/i,
-              use: ['style-loader', 'css-loader']
+              use: ['style-loader', 'css-loader'].map(packageName =>
+                require.resolve(packageName)
+              )
             }
           ]
-        }
+        },
+        ...(webpack === webpackV4
+          ? {
+              resolve: {
+                plugins: [PnpWebpackPlugin]
+              },
+              resolveLoader: {
+                plugins: [PnpWebpackPlugin.moduleLoader(module)]
+              }
+            }
+          : {})
       },
       done,
       [],
@@ -405,4 +443,12 @@ describe('ModifyModuleSourcePlugin', () => {
       ]
     );
   });
+}
+
+describe('ModifyModuleSourcePlugin::webpack-v5', () => {
+  runTests(webpackV5);
+});
+
+describe('ModifyModuleSourcePlugin::webpack-v4', () => {
+  runTests(webpackV4);
 });
