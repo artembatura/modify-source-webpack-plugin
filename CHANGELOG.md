@@ -52,7 +52,7 @@ module.exports = function loader(source) {
 };
 ```
 
-This approach cause [critical bugs](https://github.com/artemirq/modify-source-webpack-plugin/issues/59) what led to the rejection from this approach (thanks to @dreamerblue for reporting).
+This approach cause [critical bugs](https://github.com/artemirq/modify-source-webpack-plugin/issues/59) what led to the rejection from this approach (thanks to [@dreamerblue](https://github.com/dreamerblue) for reporting this).
 
 Operations it's a new static way to describe how modules should be modified with the capability of proper caching by webpack.
 
