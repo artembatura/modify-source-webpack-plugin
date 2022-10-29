@@ -1,5 +1,4 @@
-import type { Compiler } from 'webpack';
-import { NormalModule } from 'webpack';
+import type { Compiler, NormalModule } from 'webpack';
 
 import { AbstractOperation } from './operations';
 import { rehydrate } from './rehydrate';
@@ -56,7 +55,6 @@ export class ModifySourcePlugin {
   public apply(compiler: Compiler): void {
     const { rules, debug } = this.options;
 
-    const isWebpackV5 = compiler.webpack && compiler.webpack.version >= '5';
     const modifiedModules: (string | number)[] = [];
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
@@ -114,7 +112,13 @@ export class ModifySourcePlugin {
         });
       };
 
-      if (isWebpackV5) {
+      const NormalModule = compiler.webpack?.NormalModule;
+      const isNormalModuleAvailable = Boolean(NormalModule);
+
+      if (
+        isNormalModuleAvailable &&
+        Boolean(NormalModule.getCompilationHooks)
+      ) {
         NormalModule.getCompilationHooks(compilation).beforeLoaders.tap(
           PLUGIN_NAME,
           tapCallback
