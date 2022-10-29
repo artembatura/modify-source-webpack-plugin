@@ -9,7 +9,7 @@ Webpack Plugin for modifying modules source.
 | ^5.0.0          | ^4.0.0-beta.1  | <p align="center">✅</p> |
 | ^4.37.0         | ^4.0.0-beta.1  | <p align="center">✅</p> |
 
-## [Migration guide](https://github.com/artemirq/modify-source-webpack-plugin/CHANGELOG.md#) from version 3
+## [Migration guide](https://github.com/artemirq/modify-source-webpack-plugin/blob/4.x-dev/CHANGELOG.md#migration-guide-3x-to-4x) from version 3
 
 ## Installation
 
