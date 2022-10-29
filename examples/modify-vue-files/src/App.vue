@@ -6,6 +6,8 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 
+// {MY_CUSTOM_CODE}
+
 export default {
   name: 'App',
   components: {

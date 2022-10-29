@@ -1,6 +1,6 @@
 {
   "name": "modify-source-webpack-plugin",
-  "version": "3.0.0",
+  "version": "4.0.0-beta.1",
   "description": "Webpack Plugin for modifying modules source",
   "author": {
     "name": "Artem Batura",
@@ -96,5 +96,6 @@
     "rebuildModule",
     "addDependency",
     "buildModule"
-  ]
+  ],
+  "packageManager": "yarn@3.2.4"
 }

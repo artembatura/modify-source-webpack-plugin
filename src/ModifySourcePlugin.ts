@@ -1,11 +1,14 @@
 import type { Compiler } from 'webpack';
 import { NormalModule } from 'webpack';
 
+import { AbstractOperation } from './operations';
+import { rehydrate } from './rehydrate';
+
 const { validate } = require('schema-utils');
 
 export interface Rule {
   test: RegExp | ((module: NormalModule) => boolean);
-  modify: (source: string, path: string) => string;
+  operations?: AbstractOperation[];
 }
 
 export type Options = {
@@ -29,8 +32,11 @@ const validationSchema = {
           test: {
             anyOf: [{ instanceof: 'Function' }, { instanceof: 'RegExp' }]
           },
-          modify: {
-            instanceof: 'Function'
+          operations: {
+            type: 'array',
+            items: {
+              type: 'object'
+            }
           }
         }
       }
@@ -51,12 +57,9 @@ export class ModifySourcePlugin {
     const { rules, debug } = this.options;
 
     const isWebpackV5 = compiler.webpack && compiler.webpack.version >= '5';
+    const modifiedModules: (string | number)[] = [];
 
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
-      const modifiedModules: (string | number)[] = [];
-
-      (global as any).modifyFunctions = rules.map(rule => rule.modify);
-
       const tapCallback = (_: any, normalModule: NormalModule) => {
         const userRequest = normalModule.userRequest || '';
 
@@ -66,14 +69,14 @@ export class ModifySourcePlugin {
             : userRequest.lastIndexOf('!') + 1;
 
         const moduleRequest = userRequest
-          .substr(startIndex)
+          .substring(startIndex)
           .replace(/\\/g, '/');
 
         if (modifiedModules.includes(moduleRequest)) {
           return;
         }
 
-        rules.forEach((options, ruleIndex) => {
+        rules.forEach(options => {
           const test = options.test;
           const isMatched = (() => {
             if (typeof test === 'function' && test(normalModule)) {
@@ -83,28 +86,30 @@ export class ModifySourcePlugin {
             return test instanceof RegExp && test.test(moduleRequest);
           })();
 
-          if (debug && isMatched) {
-            // eslint-disable-next-line no-console
-            console.log(
-              `[${PLUGIN_NAME}] Add loader for module ${moduleRequest} at index ${ruleIndex}.`
-            );
-          }
-
           if (isMatched) {
-            (normalModule.loaders as {
+            type NormalModuleLoader = {
               loader: string;
               options: any;
               ident?: string;
               type?: string;
-            }[]).push({
+            };
+
+            (normalModule.loaders as NormalModuleLoader[]).push({
               loader: require.resolve('./loader.js'),
-              options: {
-                path: moduleRequest,
-                ruleIndex
-              }
+              options: rehydrate({
+                moduleRequest,
+                operations: options.operations
+              })
             });
 
             modifiedModules.push(moduleRequest);
+
+            if (debug) {
+              // eslint-disable-next-line no-console
+              console.log(
+                `\n[${PLUGIN_NAME}] Use loader for "${moduleRequest}".`
+              );
+            }
           }
         });
       };

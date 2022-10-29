@@ -5,6 +5,7 @@ import webpackV5, { Stats } from 'webpack';
 import webpackV4 from 'webpack4';
 
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
+import { ConcatOperation } from '../operations';
 
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 
@@ -116,11 +117,24 @@ function getModulePath(fileName: string): string {
   return path.join(__dirname, `fixtures/${fileName}`);
 }
 
+const moduleSrcOperation = new ConcatOperation(
+  'end',
+  '// [::SOME_UNIQUE_STRING][$FILE_NAME]'
+);
+const cssSrcOperation = new ConcatOperation(
+  'end',
+  '/* [::SOME_UNIQUE_STRING][$FILE_NAME] */'
+);
+const modernNormalizeCssOperation = new ConcatOperation(
+  'end',
+  '.myExtraClass { background: gray; /* $FILE_NAME */ }'
+);
+
 const modifyModuleSrc = (src: string, filePath: string) =>
   src + `// [::SOME_UNIQUE_STRING][${path.basename(filePath)}]`;
 
-const modifyCssSrc = (src: string, filePath: string) =>
-  src + `/* [::SOME_UNIQUE_STRING][${path.basename(filePath)}] */`;
+// const modifyCssSrc = (src: string, filePath: string) =>
+//   src + `/* [::SOME_UNIQUE_STRING][${path.basename(filePath)}] */`;
 
 function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
   beforeEach(done => {
@@ -142,7 +156,7 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
             rules: [
               {
                 test: /index\.js$/,
-                modify: modifyModuleSrc
+                operations: [moduleSrcOperation]
               }
             ]
           })
@@ -195,7 +209,7 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
             rules: [
               {
                 test: /one-module\.js$/,
-                modify: modifyModuleSrc
+                operations: [moduleSrcOperation]
               }
             ]
           })
@@ -246,7 +260,7 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
             rules: [
               {
                 test: /two-module\.js$/,
-                modify: modifyModuleSrc
+                operations: [moduleSrcOperation]
               }
             ]
           })
@@ -297,7 +311,7 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
             rules: [
               {
                 test: /.+\.js$/,
-                modify: modifyModuleSrc
+                operations: [moduleSrcOperation]
               }
             ]
           })
@@ -352,7 +366,7 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
             rules: [
               {
                 test: /\.css$/,
-                modify: modifyCssSrc
+                operations: [cssSrcOperation]
               }
             ]
           })
@@ -402,12 +416,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
             rules: [
               {
                 test: /node_modules\/modern-normalize\/modern-normalize\.css$/,
-                modify: (src: any, filePath: any) =>
-                  src +
-                  `.myExtraClass { background: gray; /* ${path.basename(
-                    filePath
-                  )} */ }`
-              } as any
+                operations: [modernNormalizeCssOperation]
+              }
             ]
           })
         ],
