@@ -6,8 +6,8 @@ Webpack Plugin for modifying modules source.
 
 | Webpack Version | Plugin version | Status                   |
 | --------------- | -------------- | ------------------------ |
-| ^5.0.0          | ^4.0.0-beta.1  | <p align="center">✅</p> |
-| ^4.37.0         | ^4.0.0-beta.1  | <p align="center">✅</p> |
+| ^5.0.0          | ^4.0.0-beta.2  | <p align="center">✅</p> |
+| ^4.37.0         | ^4.0.0-beta.2  | <p align="center">✅</p> |
 
 ## [Migration guide](https://github.com/artemirq/modify-source-webpack-plugin/blob/master/CHANGELOG.md#migration-guide-3x-to-4x) from version 3
 
