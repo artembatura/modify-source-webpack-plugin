@@ -1,7 +1,6 @@
 import type { Compiler, NormalModule } from 'webpack';
 
-import { AbstractOperation } from './operations';
-import { rehydrate } from './rehydrate';
+import { AbstractOperation, Operation } from './operations';
 
 const { validate } = require('schema-utils');
 
@@ -13,15 +12,13 @@ export interface Rule {
 export type Options = {
   debug?: boolean;
   rules: Rule[];
+  constants?: Record<string, string | number>;
 };
 
 const validationSchema = {
   type: 'object',
   additionalProperties: false,
   properties: {
-    debug: {
-      type: 'boolean'
-    },
     rules: {
       type: 'array',
       items: {
@@ -39,6 +36,12 @@ const validationSchema = {
           }
         }
       }
+    },
+    constants: {
+      type: 'object'
+    },
+    debug: {
+      type: 'boolean'
     }
   }
 };
@@ -53,7 +56,7 @@ export class ModifySourcePlugin {
   }
 
   public apply(compiler: Compiler): void {
-    const { rules, debug } = this.options;
+    const { rules, debug, constants = {} } = this.options;
 
     const modifiedModules: (string | number)[] = [];
 
@@ -74,8 +77,8 @@ export class ModifySourcePlugin {
           return;
         }
 
-        rules.forEach(options => {
-          const test = options.test;
+        rules.forEach(ruleOptions => {
+          const test = ruleOptions.test;
           const isMatched = (() => {
             if (typeof test === 'function' && test(normalModule)) {
               return true;
@@ -92,12 +95,17 @@ export class ModifySourcePlugin {
               type?: string;
             };
 
+            const serializableOperations = ruleOptions.operations?.map(op =>
+              Operation.makeSerializable(op)
+            );
+
             (normalModule.loaders as NormalModuleLoader[]).push({
               loader: require.resolve('./loader.js'),
-              options: rehydrate({
+              options: {
                 moduleRequest,
-                operations: options.operations
-              })
+                operations: serializableOperations,
+                constants
+              }
             });
 
             modifiedModules.push(moduleRequest);

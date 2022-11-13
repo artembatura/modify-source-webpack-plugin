@@ -13,6 +13,14 @@ export class ConcatOperation extends AbstractOperation {
     super();
   }
 
+  public getSerializableProperties(): (keyof this & string)[] {
+    return ['type', 'value'];
+  }
+
+  public getTextProperties(): (keyof this & string)[] {
+    return ['value'];
+  }
+
   public static getAllowedTypes(): ConcatOperationType[] {
     return [ConcatOperationType.start, ConcatOperationType.end];
   }

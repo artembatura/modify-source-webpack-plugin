@@ -14,6 +14,14 @@ export class ReplaceOperation extends AbstractOperation {
     super();
   }
 
+  public getSerializableProperties(): (keyof this & string)[] {
+    return ['type', 'searchValue', 'replaceValue'];
+  }
+
+  public getTextProperties(): (keyof this & string)[] {
+    return ['searchValue', 'replaceValue'];
+  }
+
   public static getAllowedTypes(): ReplaceOperationType[] {
     return [ReplaceOperationType.all, ReplaceOperationType.once];
   }

@@ -2,45 +2,35 @@ const { getOptions } = require('loader-utils');
 const path = require('path');
 const { validate } = require('schema-utils');
 
-const { applyOperation } = require('./applyOperation');
+const { Operation } = require('./operations');
+
+/** @typedef { import('./operations/AbstractOperation').SerializableOperation } SerializableOperation */
 
 /**
  * @typedef {Object} LoaderOptions
- * @property {AbstractOperation[]} operations
+ * @property {SerializableOperation[]} operations
  * @property {string} moduleRequest
+ * @property {Record<string, string | number>} constants
  */
 
 const schema = {
   type: 'object',
   properties: {
-    moduleRequest: {
-      type: 'string'
-    },
     operations: {
       type: 'array',
       items: {
         type: 'object'
       }
+    },
+    moduleRequest: {
+      type: 'string'
+    },
+    constants: {
+      type: 'object'
     }
   },
   additionalProperties: false
 };
-
-/**
- * @param {string} src
- * @param {string} moduleRequest
- * @returns {string}
- */
-function fillVariables(src, moduleRequest) {
-  const cleanPath = moduleRequest.split('?')[0];
-  const fileName = path.basename(cleanPath);
-
-  // TODO: variables should be filled not in whole file, ONLY in operations values
-  // TODO: replace \ to / when replacing variables
-  return src
-    .replace(/\$FILE_PATH/g, cleanPath)
-    .replace(/\$FILE_NAME/g, fileName);
-}
 
 /**
  * @param {string} source
@@ -56,10 +46,19 @@ module.exports = function modifyModuleSourceLoader(source) {
     name: 'ModifySourcePlugin webpack loader'
   });
 
-  const result = options.operations.reduce(
-    (src, operation) => applyOperation(src, operation),
-    source
-  );
+  const cleanPath = options.moduleRequest.split('?')[0];
+  const fileName = path.basename(cleanPath);
 
-  return fillVariables(result, options.moduleRequest);
+  return options.operations.reduce((sourceText, serializableOp) => {
+    const operation = Operation.fillConstants(
+      Operation.fromSerializable(serializableOp),
+      {
+        ...options.constants,
+        FILE_PATH: cleanPath,
+        FILE_NAME: fileName
+      }
+    );
+
+    return Operation.apply(sourceText, operation);
+  }, source);
 };
