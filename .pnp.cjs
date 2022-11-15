@@ -49,7 +49,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["husky", "npm:4.3.8"],\
             ["jest", "npm:26.6.3"],\
             ["lint-staged", "npm:10.5.4"],\
-            ["loader-utils", "npm:2.0.3"],\
+            ["loader-utils", "npm:2.0.4"],\
             ["modern-normalize", "npm:1.1.0"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["pnp-webpack-plugin", "npm:1.6.4"],\
@@ -3409,7 +3409,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["css-loader", "virtual:5eb4436d897de7383ec857abdb30a0c574bea24f42aa868d9da7782c8b6f1fab856a1517ce835591839e68a8189ec100a3e71d58fbaace9cd8735e1f21760053#npm:5.2.7"],\
             ["@types/webpack", null],\
             ["icss-utils", "virtual:0fd0fc7e3dec7ee92344acaa912119e3587532e100df806663af2762a52e63f10f2a555e726c700cd13f7c876704a144cae054cf8399ee4c27bd713a8bf11f8f#npm:5.1.0"],\
-            ["loader-utils", "npm:2.0.3"],\
+            ["loader-utils", "npm:2.0.4"],\
             ["postcss", "npm:8.4.18"],\
             ["postcss-modules-extract-imports", "virtual:0fd0fc7e3dec7ee92344acaa912119e3587532e100df806663af2762a52e63f10f2a555e726c700cd13f7c876704a144cae054cf8399ee4c27bd713a8bf11f8f#npm:3.0.0"],\
             ["postcss-modules-local-by-default", "virtual:0fd0fc7e3dec7ee92344acaa912119e3587532e100df806663af2762a52e63f10f2a555e726c700cd13f7c876704a144cae054cf8399ee4c27bd713a8bf11f8f#npm:4.0.0"],\
@@ -6850,10 +6850,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:2.0.3", {\
-          "packageLocation": "./.yarn/cache/loader-utils-npm-2.0.3-4d761d6a51-d055c61ce5.zip/node_modules/loader-utils/",\
+        ["npm:2.0.4", {\
+          "packageLocation": "./.yarn/cache/loader-utils-npm-2.0.4-ba3800585b-a5281f5fff.zip/node_modules/loader-utils/",\
           "packageDependencies": [\
-            ["loader-utils", "npm:2.0.3"],\
+            ["loader-utils", "npm:2.0.4"],\
             ["big.js", "npm:5.2.2"],\
             ["emojis-list", "npm:3.0.0"],\
             ["json5", "npm:2.2.1"]\
@@ -7376,7 +7376,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["husky", "npm:4.3.8"],\
             ["jest", "npm:26.6.3"],\
             ["lint-staged", "npm:10.5.4"],\
-            ["loader-utils", "npm:2.0.3"],\
+            ["loader-utils", "npm:2.0.4"],\
             ["modern-normalize", "npm:1.1.0"],\
             ["npm-run-all", "npm:4.1.5"],\
             ["pnp-webpack-plugin", "npm:1.6.4"],\
@@ -9736,7 +9736,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["style-loader", "virtual:5eb4436d897de7383ec857abdb30a0c574bea24f42aa868d9da7782c8b6f1fab856a1517ce835591839e68a8189ec100a3e71d58fbaace9cd8735e1f21760053#npm:2.0.0"],\
             ["@types/webpack", null],\
-            ["loader-utils", "npm:2.0.3"],\
+            ["loader-utils", "npm:2.0.4"],\
             ["schema-utils", "npm:3.1.1"],\
             ["webpack", "virtual:0dc39cc4ef61d567603f290f8f6843eb6bb61bf7f813e471f2f9de7908c2b1d306c65b6fa7bbd8b0f136e208f43b13693ebd7f95d78e78267b51265185927418#npm:5.74.0"]\
           ],\
