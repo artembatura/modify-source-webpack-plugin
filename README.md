@@ -1,9 +1,9 @@
 [![npm version](https://img.shields.io/npm/v/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
-[![npm version](https://img.shields.io/npm/dm/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
-[![npm version](https://img.shields.io/npm/dt/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
-[![npm version](https://img.shields.io/snyk/vulnerabilities/npm/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
-[![npm version](https://img.shields.io/librariesio/release/npm/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
-[![npm version](https://img.shields.io/npm/l/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
+![npm version](https://img.shields.io/npm/dm/modify-source-webpack-plugin.svg)
+![npm version](https://img.shields.io/npm/dt/modify-source-webpack-plugin.svg)
+![npm version](https://img.shields.io/snyk/vulnerabilities/npm/modify-source-webpack-plugin.svg)
+![npm version](https://img.shields.io/librariesio/release/npm/modify-source-webpack-plugin.svg)
+[![npm version](https://img.shields.io/npm/l/modify-source-webpack-plugin.svg)](https://github.com/artemirq/modify-source-webpack-plugin)
 
 # modify-source-webpack-plugin
 
