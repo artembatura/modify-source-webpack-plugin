@@ -284,7 +284,7 @@ plugins: [
   new ModifySourcePlugin({
     rules: [
       {
-        test: /my-file\.jsx$/,
+        test: /my-component\.jsx$/,
         operations: [
           new ReplaceOperation('all', '$NAME', 'Artem Batura'),
           new ReplaceOperation('once', '$EXIT_LABEL', 'Exit')
@@ -347,7 +347,7 @@ plugins: [
   new ModifySourcePlugin({
     rules: [
       {
-        test: /my-file\.js$/,
+        test: /my-component\.js$/,
         operations: [
           new ReplaceOperation(
             'once',
