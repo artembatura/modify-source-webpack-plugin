@@ -1,3 +1,10 @@
+[![npm version](https://img.shields.io/npm/v/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
+[![npm version](https://img.shields.io/npm/dm/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
+[![npm version](https://img.shields.io/npm/dt/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
+[![npm version](https://img.shields.io/snyk/vulnerabilities/npm/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
+[![npm version](https://img.shields.io/librariesio/release/npm/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
+[![npm version](https://img.shields.io/npm/l/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
+
 # modify-source-webpack-plugin
 
 Webpack Plugin for modifying modules source.
@@ -6,8 +13,8 @@ Webpack Plugin for modifying modules source.
 
 | Webpack Version | Plugin version | Status                   |
 | --------------- | -------------- | ------------------------ |
-| ^5.0.0          | ^4.0.0-beta.2  | <p align="center">✅</p> |
-| ^4.37.0         | ^4.0.0-beta.2  | <p align="center">✅</p> |
+| ^5.0.0          | ^4.0.0         | <p align="center">✅</p> |
+| ^4.37.0         | ^4.0.0         | <p align="center">✅</p> |
 
 ## [Migration guide](https://github.com/artemirq/modify-source-webpack-plugin/blob/master/CHANGELOG.md#migration-guide-3x-to-4x) from version 3
 
@@ -16,13 +23,13 @@ Webpack Plugin for modifying modules source.
 ### NPM
 
 ```
-npm i -D modify-source-webpack-plugin@next
+npm i -D modify-source-webpack-plugin
 ```
 
 ### Yarn
 
 ```
-yarn add -D modify-source-webpack-plugin@next
+yarn add -D modify-source-webpack-plugin
 ```
 
 ## Import

@@ -1,4 +1,4 @@
-## 4.0.0 (2021-12-18, TBA)
+## 4.0.0 (2023-02-11)
 
 The main step forward in this release was rejecting a bad approach with global variable which was used to access modify functions from webpack loader.
 
