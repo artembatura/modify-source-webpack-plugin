@@ -1,17 +1,8 @@
-const { getOptions } = require('loader-utils');
-const path = require('path');
+import path from 'path';
+
+import { Operation, SerializableOperation } from './operations';
+
 const { validate } = require('schema-utils');
-
-const { Operation } = require('./operations');
-
-/** @typedef { import('./operations/AbstractOperation').SerializableOperation } SerializableOperation */
-
-/**
- * @typedef {Object} LoaderOptions
- * @property {SerializableOperation[]} operations
- * @property {string} moduleRequest
- * @property {Record<string, string | number>} constants
- */
 
 const schema = {
   type: 'object',
@@ -32,15 +23,23 @@ const schema = {
   additionalProperties: false
 };
 
-/**
- * @param {string} source
- * @returns {string}
- */
-module.exports = function modifyModuleSourceLoader(source) {
-  /**
-   * @type {LoaderOptions}
-   */
-  const options = getOptions(this);
+interface LoaderOptions {
+  operations: SerializableOperation[];
+  moduleRequest: string;
+  constants: Record<string, string>;
+}
+
+interface modifyModuleSourceLoader {
+  getOptions?: () => LoaderOptions;
+}
+
+export default function modifyModuleSourceLoader(
+  this: modifyModuleSourceLoader,
+  source: string
+): string {
+  const options: LoaderOptions = this.getOptions
+    ? this.getOptions()
+    : require('loader-utils-webpack-v4').getOptions(this);
 
   validate(schema, options, {
     name: 'ModifySourcePlugin webpack loader'
@@ -61,4 +60,4 @@ module.exports = function modifyModuleSourceLoader(source) {
 
     return Operation.apply(sourceText, operation);
   }, source);
-};
+}

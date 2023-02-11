@@ -99,8 +99,13 @@ export class ModifySourcePlugin {
               Operation.makeSerializable(op)
             );
 
+            const loader =
+              process.env.NODE_ENV === 'test'
+                ? require.resolve('../build/loader.js')
+                : require.resolve('./loader.js');
+
             (normalModule.loaders as NormalModuleLoader[]).push({
-              loader: require.resolve('./loader.js'),
+              loader,
               options: {
                 moduleRequest,
                 operations: serializableOperations,
@@ -121,12 +126,10 @@ export class ModifySourcePlugin {
       };
 
       const NormalModule = compiler.webpack?.NormalModule;
-      const isNormalModuleAvailable = Boolean(NormalModule);
+      const isNormalModuleAvailable =
+        Boolean(NormalModule) && Boolean(NormalModule.getCompilationHooks);
 
-      if (
-        isNormalModuleAvailable &&
-        Boolean(NormalModule.getCompilationHooks)
-      ) {
+      if (isNormalModuleAvailable) {
         NormalModule.getCompilationHooks(compilation).beforeLoaders.tap(
           PLUGIN_NAME,
           tapCallback

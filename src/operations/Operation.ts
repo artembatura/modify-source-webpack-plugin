@@ -6,10 +6,7 @@ import {
 import { ConcatOperation } from './ConcatOperation';
 import { ReplaceOperation } from './ReplaceOperation';
 
-function isSerializableOfOperation<
-  T extends AbstractOperation,
-  TSerializable extends SerializableOperation
->(
+function isSerializableOfOperation<T extends AbstractOperation>(
   serializable: SerializableOperation,
   operation: { new (...args: any[]): T }
 ): serializable is SerializableOperation<T> {
@@ -100,8 +97,6 @@ export class Operation {
   }
 
   public static apply(src: string, operation: AbstractOperation): string {
-    // console.log(`operation ${new Date().getTime()}`, operation);
-
     if (operation instanceof ConcatOperation) {
       switch (operation.type) {
         case 'start':

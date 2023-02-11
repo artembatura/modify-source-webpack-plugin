@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import rimraf from 'rimraf';
 import webpackV5, { Stats } from 'webpack';
-import webpackV4 from 'webpack4';
+import webpackV4 from 'webpack-v4';
 
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
 import { ConcatOperation } from '../operations';
@@ -81,6 +81,14 @@ function testPlugin(
         expect(moduleSource).toContain(containItem);
       });
     });
+
+    const bundleExists = fs.existsSync(OUTPUT_PATH + '/' + OUTPUT_BUNDLE);
+
+    expect(bundleExists).toBe(true);
+
+    if (!bundleExists) {
+      return done();
+    }
 
     const bundleContent = fs
       .readFileSync(OUTPUT_PATH + '/' + OUTPUT_BUNDLE)
