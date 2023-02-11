@@ -99,10 +99,13 @@ export class ModifySourcePlugin {
               Operation.makeSerializable(op)
             );
 
-            const loader =
-              process.env.NODE_ENV === 'test'
-                ? require.resolve('../build/loader.js')
-                : require.resolve('./loader.js');
+            let loader;
+
+            try {
+              loader = require.resolve('./loader.js');
+            } catch (e) {
+              loader = require.resolve('../build/loader.js');
+            }
 
             (normalModule.loaders as NormalModuleLoader[]).push({
               loader,
