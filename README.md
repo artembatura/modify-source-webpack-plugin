@@ -5,7 +5,7 @@
 ![npm version](https://img.shields.io/librariesio/release/npm/modify-source-webpack-plugin.svg)
 [![npm version](https://img.shields.io/npm/l/modify-source-webpack-plugin.svg)](https://github.com/artemirq/modify-source-webpack-plugin)
 
-# modify-source-webpack-plugin
+# [modify-source-webpack-plugin](https://www.npmjs.com/package/modify-source-webpack-plugin)
 
 Webpack Plugin for modifying modules source.
 
