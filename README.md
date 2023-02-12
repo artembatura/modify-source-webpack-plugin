@@ -3,11 +3,11 @@
 ![npm version](https://img.shields.io/npm/dt/modify-source-webpack-plugin.svg)
 ![npm version](https://img.shields.io/snyk/vulnerabilities/npm/modify-source-webpack-plugin.svg)
 ![npm version](https://img.shields.io/librariesio/release/npm/modify-source-webpack-plugin.svg)
-[![npm version](https://img.shields.io/npm/l/modify-source-webpack-plugin.svg)](https://github.com/artemirq/modify-source-webpack-plugin)
+[![npm version](https://img.shields.io/npm/l/modify-source-webpack-plugin.svg)](https://github.com/artembatura/modify-source-webpack-plugin)
 
 # [modify-source-webpack-plugin](https://www.npmjs.com/package/modify-source-webpack-plugin)
 
-Webpack Plugin for modifying modules source.
+Webpack plugin for modifying modules source.
 
 ## Compatibility
 
@@ -16,7 +16,7 @@ Webpack Plugin for modifying modules source.
 | ^5.0.0          | ^4.0.0         | <p align="center">✅</p> |
 | ^4.37.0         | ^4.0.0         | <p align="center">✅</p> |
 
-## [Migration guide](https://github.com/artemirq/modify-source-webpack-plugin/blob/master/CHANGELOG.md#migration-guide-3x-to-4x) from version 3
+## [Migration guide](https://github.com/artembatura/modify-source-webpack-plugin/blob/master/CHANGELOG.md#migration-guide-3x-to-4x) from version 3
 
 ## Installation
 

@@ -1,17 +1,17 @@
 {
   "name": "modify-source-webpack-plugin",
-  "version": "4.0.0",
-  "description": "Webpack Plugin for modifying modules source",
+  "version": "4.0.1",
+  "description": "Webpack plugin for modifying modules source",
   "author": {
     "name": "Artem Batura",
-    "email": "artemir.q@gmail.com"
+    "email": "artembatura.dev@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/artemirq/modify-source-webpack-plugin"
+    "url": "https://github.com/artembatura/modify-source-webpack-plugin"
   },
   "bugs": {
-    "url": "https://github.com/artemirq/modify-source-webpack-plugin/issues"
+    "url": "https://github.com/artembatura/modify-source-webpack-plugin/issues"
   },
   "license": "MIT",
   "main": "build/index.js",

@@ -52,7 +52,7 @@ module.exports = function loader(source) {
 };
 ```
 
-This approach cause [critical bugs](https://github.com/artemirq/modify-source-webpack-plugin/issues/59) what led to the rejection from this approach (thanks to [@dreamerblue](https://github.com/dreamerblue) for reporting this).
+This approach cause [critical bugs](https://github.com/artembatura/modify-source-webpack-plugin/issues/59) what led to the rejection from this approach (thanks to [@dreamerblue](https://github.com/dreamerblue) for reporting this).
 
 Operations it's a new static way to describe how modules should be modified with the capability of proper caching by webpack.
 
@@ -237,10 +237,10 @@ new ModifySourcePlugin({
 
 #### :boom: Breaking Change
 
-- [#55](https://github.com/artemirq/modify-source-webpack-plugin/pull/55) Pass full path instead of filename to modify function. [Issue](https://github.com/artemirq/modify-source-webpack-plugin/issues/53)
+- [#55](https://github.com/artembatura/modify-source-webpack-plugin/pull/55) Pass full path instead of filename to modify function. [Issue](https://github.com/artembatura/modify-source-webpack-plugin/issues/53)
 
 #### :nail_care: Enhancement
 
-- [#55](https://github.com/artemirq/modify-source-webpack-plugin/pull/55) Support for Webpack 5 and Webpack 4 in one package
+- [#55](https://github.com/artembatura/modify-source-webpack-plugin/pull/55) Support for Webpack 5 and Webpack 4 in one package
 
-- [#55](https://github.com/artemirq/modify-source-webpack-plugin/pull/55) Validate incoming options to plugin
+- [#55](https://github.com/artembatura/modify-source-webpack-plugin/pull/55) Validate incoming options to plugin
