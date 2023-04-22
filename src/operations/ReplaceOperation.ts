@@ -7,7 +7,7 @@ import { TextRangeMarkerGroup } from '../range/TextRangeMarkerGroup';
 import { rangeFromSerializable } from '../serializable/rangeFromSerializable';
 import { SerializableClassInstance } from '../types';
 
-enum ReplaceRepeatCount {
+export enum ReplaceRepeatCount {
   ALL = 'all',
   ONCE = 'once'
 }
