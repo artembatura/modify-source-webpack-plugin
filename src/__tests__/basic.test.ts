@@ -5,7 +5,9 @@ import webpackV5, { Stats } from 'webpack';
 import webpackV4 from 'webpack-v4';
 
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
-import { ConcatOperation } from '../operations';
+import { ConcatOperation, ConcatOperationStrategy } from '../operations';
+
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 
 import DoneCallback = jest.DoneCallback;
 
@@ -124,15 +126,15 @@ function getModulePath(fileName: string): string {
 }
 
 const moduleSrcOperation = new ConcatOperation(
-  'end',
+  ConcatOperationStrategy.END,
   '// [::SOME_UNIQUE_STRING][$FILE_NAME]'
 );
 const cssSrcOperation = new ConcatOperation(
-  'end',
+  ConcatOperationStrategy.END,
   '/* [::SOME_UNIQUE_STRING][$FILE_NAME] */'
 );
 const modernNormalizeCssOperation = new ConcatOperation(
-  'end',
+  ConcatOperationStrategy.END,
   '.myExtraClass { background: gray; /* $FILE_NAME */ }'
 );
 
@@ -157,8 +159,7 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
         entry: path.join(__dirname, 'fixtures/index.js'),
         output: {
           path: OUTPUT_PATH,
-          filename: OUTPUT_BUNDLE,
-          hashFunction
+          filename: OUTPUT_BUNDLE
         },
         plugins: [
           new ModifySourcePlugin({
