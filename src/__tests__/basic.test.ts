@@ -7,8 +7,6 @@ import webpackV4 from 'webpack-v4';
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
 import { ConcatOperation, ConcatOperationStrategy } from '../operations';
 
-const PnpWebpackPlugin = require('pnp-webpack-plugin');
-
 import DoneCallback = jest.DoneCallback;
 
 const OUTPUT_PATH = path.resolve(__dirname, './build/basic-test');
