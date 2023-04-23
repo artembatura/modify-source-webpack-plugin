@@ -1,20 +1,20 @@
 import { AbstractOperation } from '../AbstractOperation';
 import { fillStringWithConstants } from '../fillStringWithConstants';
 import { LinesRange } from '../range/LinesRange';
-import { LinesRangeMarkerGroup } from '../range/LinesRangeMarkerGroup';
+import { LinesRangeMarked } from '../range/LinesRangeMarked';
 import { TextRange } from '../range/TextRange';
-import { TextRangeMarkerGroup } from '../range/TextRangeMarkerGroup';
+import { TextRangeMarked } from '../range/TextRangeMarked';
 import { rangeFromSerializable } from '../serializable/rangeFromSerializable';
 import { SerializableClassInstance } from '../types';
 
-export enum ReplaceRepeatCount {
+export enum ReplaceStrategy {
   ALL = 'all',
   ONCE = 'once'
 }
 
 function applyReplaceLinesRangeOnce(
   sourceText: string,
-  searchValue: LinesRangeMarkerGroup,
+  searchValue: LinesRangeMarked,
   replaceValue: string
 ): string | null {
   const lines = sourceText.split('\n');
@@ -34,16 +34,14 @@ function applyReplaceLinesRangeOnce(
 
   const range = new LinesRange(startLineIndex, endLineIndex);
 
-  return new ReplaceOperation(
-    range,
-    replaceValue,
-    ReplaceRepeatCount.ONCE
-  ).apply(sourceText);
+  return new ReplaceOperation(range, replaceValue, ReplaceStrategy.ONCE).apply(
+    sourceText
+  );
 }
 
 function applyReplaceTextRange(
   sourceText: string,
-  searchValue: TextRangeMarkerGroup,
+  searchValue: TextRangeMarked,
   replaceValue: string
 ): string | null {
   const startIndex = sourceText.indexOf(searchValue.startToken);
@@ -56,7 +54,7 @@ function applyReplaceTextRange(
   return new ReplaceOperation(
     new TextRange(startIndex, endIndex + searchValue.endToken.length - 1),
     replaceValue,
-    ReplaceRepeatCount.ONCE
+    ReplaceStrategy.ONCE
   ).apply(sourceText);
 }
 
@@ -68,12 +66,10 @@ export class ReplaceOperation extends AbstractOperation {
       | string
       | TextRange
       | LinesRange
-      | TextRangeMarkerGroup
-      | LinesRangeMarkerGroup,
+      | TextRangeMarked
+      | LinesRangeMarked,
     public readonly replaceValue: string,
-    public readonly repeatCount:
-      | number
-      | ReplaceRepeatCount = ReplaceRepeatCount.ONCE
+    public readonly repeatCount: number | ReplaceStrategy = ReplaceStrategy.ONCE
   ) {
     super();
   }
@@ -91,22 +87,6 @@ export class ReplaceOperation extends AbstractOperation {
       repeatCount: this.repeatCount
     };
   }
-
-  // public toSerializableWithConstants<
-  //   TConstants extends Record<string, string | number>
-  // >(constants: TConstants): SerializableClassInstance<ReplaceOperationNew> {
-  //   const serializable = this.toSerializable();
-  //
-  //   return {
-  //     id: serializable.id,
-  //     searchValue: serializable.searchValue,
-  //     replaceValue: fillStringWithConstants(
-  //       serializable.replaceValue,
-  //       constants
-  //     ),
-  //     repeatCount: serializable.repeatCount
-  //   };
-  // }
 
   static fromSerializable<TConstants extends Record<string, string | number>>(
     serializable: SerializableClassInstance<ReplaceOperation>,
@@ -143,10 +123,10 @@ export class ReplaceOperation extends AbstractOperation {
       }
 
       switch (this.repeatCount) {
-        case ReplaceRepeatCount.ONCE:
+        case ReplaceStrategy.ONCE:
           return sourceText.replace(searchValue, this.replaceValue);
 
-        case ReplaceRepeatCount.ALL:
+        case ReplaceStrategy.ALL:
           return sourceText.replace(
             new RegExp(searchValue, 'g'),
             this.replaceValue
@@ -210,13 +190,13 @@ export class ReplaceOperation extends AbstractOperation {
     }
 
     if (
-      searchValue instanceof TextRangeMarkerGroup ||
-      searchValue instanceof LinesRangeMarkerGroup
+      searchValue instanceof TextRangeMarked ||
+      searchValue instanceof LinesRangeMarked
     ) {
       const doApplyOnce:
         | typeof applyReplaceTextRange
         | typeof applyReplaceLinesRangeOnce =
-        searchValue instanceof TextRangeMarkerGroup
+        searchValue instanceof TextRangeMarked
           ? applyReplaceTextRange
           : applyReplaceLinesRangeOnce;
 
@@ -241,7 +221,7 @@ export class ReplaceOperation extends AbstractOperation {
       }
 
       switch (this.repeatCount) {
-        case ReplaceRepeatCount.ONCE: {
+        case ReplaceStrategy.ONCE: {
           const newSourceText = doApplyOnce(
             sourceText,
             searchValue,
@@ -255,7 +235,7 @@ export class ReplaceOperation extends AbstractOperation {
           return newSourceText;
         }
 
-        case ReplaceRepeatCount.ALL: {
+        case ReplaceStrategy.ALL: {
           let newSourceText: string = sourceText,
             continueLoop = true;
 

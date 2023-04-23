@@ -1,8 +1,8 @@
 import { AbstractSerializable } from '../AbstractSerializable';
 import { SerializableClassInstance } from '../types';
 
-export class LinesRangeMarkerGroup extends AbstractSerializable {
-  SERIALIZABLE_CLASS = 'LinesRangeMarkerGroup';
+export class TextRangeMarked extends AbstractSerializable {
+  SERIALIZABLE_CLASS = 'TextRangeMarkerGroup';
 
   constructor(
     public readonly startToken: string,
@@ -11,7 +11,7 @@ export class LinesRangeMarkerGroup extends AbstractSerializable {
     super();
   }
 
-  public toSerializable(): SerializableClassInstance<LinesRangeMarkerGroup> {
+  public toSerializable(): SerializableClassInstance<TextRangeMarked> {
     return {
       SERIALIZABLE_CLASS: this.SERIALIZABLE_CLASS,
       startToken: this.startToken,
@@ -20,11 +20,8 @@ export class LinesRangeMarkerGroup extends AbstractSerializable {
   }
 
   public static fromSerializable(
-    serializable: SerializableClassInstance<LinesRangeMarkerGroup>
-  ): LinesRangeMarkerGroup {
-    return new LinesRangeMarkerGroup(
-      serializable.startToken,
-      serializable.endToken
-    );
+    serializable: SerializableClassInstance<TextRangeMarked>
+  ): TextRangeMarked {
+    return new TextRangeMarked(serializable.startToken, serializable.endToken);
   }
 }
