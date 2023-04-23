@@ -157,7 +157,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
         entry: path.join(__dirname, 'fixtures/index.js'),
         output: {
           path: OUTPUT_PATH,
-          filename: OUTPUT_BUNDLE
+          filename: OUTPUT_BUNDLE,
+          hashFunction
         },
         plugins: [
           new ModifySourcePlugin({
