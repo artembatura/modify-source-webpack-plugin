@@ -7,8 +7,6 @@ import webpackV4 from 'webpack-v4';
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
 import { ConcatOperation } from '../operations';
 
-const PnpWebpackPlugin = require('pnp-webpack-plugin');
-
 import DoneCallback = jest.DoneCallback;
 
 const OUTPUT_PATH = path.resolve(__dirname, './build/basic-test');
@@ -149,6 +147,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
     rimraf(OUTPUT_PATH, done);
   });
 
+  const hashFunction = webpack === webpackV5 ? 'xxhash64' : 'sha256';
+
   it('modifies first module', done => {
     testPlugin(
       webpack,
@@ -157,7 +157,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
         entry: path.join(__dirname, 'fixtures/index.js'),
         output: {
           path: OUTPUT_PATH,
-          filename: OUTPUT_BUNDLE
+          filename: OUTPUT_BUNDLE,
+          hashFunction
         },
         plugins: [
           new ModifySourcePlugin({
@@ -210,7 +211,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
         entry: path.join(__dirname, 'fixtures/index.js'),
         output: {
           path: OUTPUT_PATH,
-          filename: OUTPUT_BUNDLE
+          filename: OUTPUT_BUNDLE,
+          hashFunction
         },
         plugins: [
           new ModifySourcePlugin({
@@ -261,7 +263,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
         entry: path.join(__dirname, 'fixtures/index.js'),
         output: {
           path: OUTPUT_PATH,
-          filename: OUTPUT_BUNDLE
+          filename: OUTPUT_BUNDLE,
+          hashFunction
         },
         plugins: [
           new ModifySourcePlugin({
@@ -312,7 +315,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
         entry: path.join(__dirname, 'fixtures/index.js'),
         output: {
           path: OUTPUT_PATH,
-          filename: OUTPUT_BUNDLE
+          filename: OUTPUT_BUNDLE,
+          hashFunction
         },
         plugins: [
           new ModifySourcePlugin({
@@ -367,7 +371,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
         entry: path.join(__dirname, 'fixtures/index-css.js'),
         output: {
           path: OUTPUT_PATH,
-          filename: OUTPUT_BUNDLE
+          filename: OUTPUT_BUNDLE,
+          hashFunction
         },
         plugins: [
           new ModifySourcePlugin({
@@ -388,17 +393,7 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
               )
             }
           ]
-        },
-        ...(webpack === webpackV4
-          ? {
-              resolve: {
-                plugins: [PnpWebpackPlugin]
-              },
-              resolveLoader: {
-                plugins: [PnpWebpackPlugin.moduleLoader(module)]
-              }
-            }
-          : {})
+        }
       },
       done,
       [],
@@ -417,7 +412,8 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
         entry: path.join(__dirname, 'fixtures/index-ext-css.js'),
         output: {
           path: OUTPUT_PATH,
-          filename: OUTPUT_BUNDLE
+          filename: OUTPUT_BUNDLE,
+          hashFunction
         },
         plugins: [
           new ModifySourcePlugin({
@@ -438,17 +434,7 @@ function runTests(webpack: typeof webpackV4 | typeof webpackV5) {
               )
             }
           ]
-        },
-        ...(webpack === webpackV4
-          ? {
-              resolve: {
-                plugins: [PnpWebpackPlugin]
-              },
-              resolveLoader: {
-                plugins: [PnpWebpackPlugin.moduleLoader(module)]
-              }
-            }
-          : {})
+        }
       },
       done,
       [],

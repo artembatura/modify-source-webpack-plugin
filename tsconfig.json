@@ -6,6 +6,7 @@
     "rootDir": "src",
     "outDir": "build",
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "lib": ["ESNext"],
     "module": "CommonJS",
     "strict": true,
