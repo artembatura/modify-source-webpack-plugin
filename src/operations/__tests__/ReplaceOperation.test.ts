@@ -1,5 +1,5 @@
-import { LinesRangeMarkerGroup } from '../../range/LinesRangeMarkerGroup';
-import { ReplaceOperation, ReplaceRepeatCount } from '../ReplaceOperation';
+import { LinesRangeMarked } from '../../range/LinesRangeMarked';
+import { ReplaceOperation, ReplaceStrategy } from '../ReplaceOperation';
 
 describe('ReplaceOperation', () => {
   it('searchValue=LinesRangeMarkerGroup, replaceCount=once', () => {
@@ -14,9 +14,9 @@ describe('ReplaceOperation', () => {
       `.trim();
 
     const result = new ReplaceOperation(
-      new LinesRangeMarkerGroup('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new LinesRangeMarked('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");',
-      ReplaceRepeatCount.ONCE
+      ReplaceStrategy.ONCE
     ).apply(text);
 
     expect(result).toEqual('console.log("Hello world!");');
@@ -48,9 +48,9 @@ describe('ReplaceOperation', () => {
     `;
 
     const result = new ReplaceOperation(
-      new LinesRangeMarkerGroup('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new LinesRangeMarked('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");\n',
-      ReplaceRepeatCount.ONCE
+      ReplaceStrategy.ONCE
     ).apply(text);
 
     expect(result).toEqual(`
@@ -98,7 +98,7 @@ console.log("Hello world!");
     `;
 
     const result = new ReplaceOperation(
-      new LinesRangeMarkerGroup('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new LinesRangeMarked('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");\n',
       3
     ).apply(text);

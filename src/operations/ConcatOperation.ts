@@ -2,7 +2,7 @@ import { AbstractOperation } from '../AbstractOperation';
 import { fillStringWithConstants } from '../fillStringWithConstants';
 import { SerializableClassInstance } from '../types';
 
-export enum ConcatOperationStrategy {
+export enum ConcatPosition {
   START = 'start',
   END = 'end'
 }
@@ -11,7 +11,7 @@ export class ConcatOperation extends AbstractOperation {
   SERIALIZABLE_CLASS = 'ConcatOperation';
 
   constructor(
-    public readonly strategy: ConcatOperationStrategy,
+    public readonly position: ConcatPosition,
     public readonly value: string
   ) {
     super();
@@ -20,7 +20,7 @@ export class ConcatOperation extends AbstractOperation {
   public toSerializable(): SerializableClassInstance<ConcatOperation> {
     return {
       SERIALIZABLE_CLASS: this.SERIALIZABLE_CLASS,
-      strategy: this.strategy,
+      position: this.position,
       value: this.value
     };
   }
@@ -33,15 +33,15 @@ export class ConcatOperation extends AbstractOperation {
       ? fillStringWithConstants(serializable.value, constants)
       : serializable.value;
 
-    return new ConcatOperation(serializable.strategy, value);
+    return new ConcatOperation(serializable.position, value);
   }
 
   apply(sourceText: string): string {
-    switch (this.strategy) {
-      case ConcatOperationStrategy.START:
+    switch (this.position) {
+      case ConcatPosition.START:
         return this.value + sourceText;
 
-      case ConcatOperationStrategy.END:
+      case ConcatPosition.END:
         return sourceText + this.value;
     }
   }

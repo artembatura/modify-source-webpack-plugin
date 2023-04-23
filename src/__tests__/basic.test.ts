@@ -5,7 +5,7 @@ import webpackV5, { Stats } from 'webpack';
 import webpackV4 from 'webpack-v4';
 
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
-import { ConcatOperation, ConcatOperationStrategy } from '../operations';
+import { ConcatOperation, ConcatPosition } from '../operations';
 
 import DoneCallback = jest.DoneCallback;
 
@@ -124,15 +124,15 @@ function getModulePath(fileName: string): string {
 }
 
 const moduleSrcOperation = new ConcatOperation(
-  ConcatOperationStrategy.END,
+  ConcatPosition.END,
   '// [::SOME_UNIQUE_STRING][$FILE_NAME]'
 );
 const cssSrcOperation = new ConcatOperation(
-  ConcatOperationStrategy.END,
+  ConcatPosition.END,
   '/* [::SOME_UNIQUE_STRING][$FILE_NAME] */'
 );
 const modernNormalizeCssOperation = new ConcatOperation(
-  ConcatOperationStrategy.END,
+  ConcatPosition.END,
   '.myExtraClass { background: gray; /* $FILE_NAME */ }'
 );
 
