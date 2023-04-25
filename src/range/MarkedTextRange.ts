@@ -4,7 +4,7 @@ import {
 } from '../serializable';
 
 export class MarkedTextRange extends AbstractSerializable {
-  SERIALIZABLE_CLASS = 'TextRangeMarkerGroup';
+  SERIALIZABLE_CLASS = MarkedTextRange.name;
 
   constructor(
     public readonly startToken: string,

@@ -63,7 +63,7 @@ function applyReplaceTextRange(
 }
 
 export class ReplaceOperation extends AbstractOperation {
-  SERIALIZABLE_CLASS = 'ReplaceOperationNew';
+  SERIALIZABLE_CLASS = ReplaceOperation.name;
 
   constructor(
     public readonly searchValue:
