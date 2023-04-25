@@ -1,8 +1,7 @@
 import { AbstractOperation } from '../AbstractOperation';
-import { ConcatOperation } from '../operations';
-import { ReplaceOperation } from '../operations/ReplaceOperation';
-import { SerializableClassInstance } from '../types';
+import { ConcatOperation, ReplaceOperation } from '../operations';
 import { isSerializableOfClass } from './isSerializableOfClass';
+import { SerializableClassInstance } from './SerializableClassInstance';
 
 export function operationFromSerializable<
   TConstants extends Record<string, string | number>

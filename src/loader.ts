@@ -2,8 +2,10 @@ import path from 'path';
 import { validate } from 'schema-utils';
 import type { Schema } from 'schema-utils/declarations/validate';
 
-import { operationFromSerializable } from './serializable/operationFromSerializable';
-import { SerializableClassInstance } from './types';
+import {
+  SerializableClassInstance,
+  operationFromSerializable
+} from './serializable';
 
 const schema: Schema = {
   type: 'object',

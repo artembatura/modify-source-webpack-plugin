@@ -1,5 +1,5 @@
 import { AbstractSerializable } from '../AbstractSerializable';
-import { SerializableClassInstance } from '../types';
+import { SerializableClassInstance } from './SerializableClassInstance';
 
 export function isSerializableOfClass<T extends AbstractSerializable>(
   serializable: SerializableClassInstance<AbstractSerializable>,

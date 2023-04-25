@@ -1,5 +1,5 @@
 import { AbstractSerializable } from '../AbstractSerializable';
-import { SerializableClassInstance } from '../types';
+import { SerializableClassInstance } from '../serializable';
 
 export class TextRange extends AbstractSerializable {
   SERIALIZABLE_CLASS = 'TextRange';

@@ -1,9 +1,11 @@
-import { LinesRange } from '../range/LinesRange';
-import { MarkedLinesRange } from '../range/MarkedLinesRange';
-import { MarkedTextRange } from '../range/MarkedTextRange';
-import { TextRange } from '../range/TextRange';
-import { SerializableClassInstance } from '../types';
+import {
+  LinesRange,
+  TextRange,
+  MarkedLinesRange,
+  MarkedTextRange
+} from '../range';
 import { isSerializableOfClass } from './isSerializableOfClass';
+import { SerializableClassInstance } from './SerializableClassInstance';
 
 export function rangeFromSerializable<
   T extends TextRange | MarkedTextRange | LinesRange | MarkedLinesRange
