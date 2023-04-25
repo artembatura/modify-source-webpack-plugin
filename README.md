@@ -1,9 +1,8 @@
-[![npm version](https://img.shields.io/npm/v/modify-source-webpack-plugin.svg)](https://www.npmjs.com/package/modify-source-webpack-plugin)
-![npm version](https://img.shields.io/npm/dm/modify-source-webpack-plugin.svg)
-![npm version](https://img.shields.io/npm/dt/modify-source-webpack-plugin.svg)
-![npm version](https://img.shields.io/snyk/vulnerabilities/npm/modify-source-webpack-plugin.svg)
-![npm version](https://img.shields.io/librariesio/release/npm/modify-source-webpack-plugin.svg)
-[![npm version](https://img.shields.io/npm/l/modify-source-webpack-plugin.svg)](https://github.com/artembatura/modify-source-webpack-plugin)
+[![npm version](https://img.shields.io/npm/v/modify-source-webpack-plugin)](https://www.npmjs.com/package/modify-source-webpack-plugin)
+![npm version](https://img.shields.io/npm/dw/modify-source-webpack-plugin)
+![npm version](https://img.shields.io/snyk/vulnerabilities/npm/modify-source-webpack-plugin)
+![npm version](https://img.shields.io/librariesio/release/npm/modify-source-webpack-plugin)
+[![npm version](https://img.shields.io/npm/l/modify-source-webpack-plugin)](https://github.com/artembatura/modify-source-webpack-plugin)
 
 # [modify-source-webpack-plugin](https://www.npmjs.com/package/modify-source-webpack-plugin)
 
@@ -13,10 +12,10 @@ Webpack plugin for modifying modules source.
 
 | Webpack Version | Plugin version | Status                   |
 | --------------- | -------------- | ------------------------ |
-| ^5.0.0          | ^4.0.0         | <p align="center">✅</p> |
-| ^4.37.0         | ^4.0.0         | <p align="center">✅</p> |
+| ^5.0.0          | ^5.0.0.beta.0  | <p align="center">✅</p> |
+| ^4.37.0         | ^5.0.0.beta.0  | <p align="center">✅</p> |
 
-## [Migration guide](https://github.com/artembatura/modify-source-webpack-plugin/blob/master/CHANGELOG.md#migration-guide-3x-to-4x) from version 3
+## [Migration guide](https://github.com/artembatura/modify-source-webpack-plugin/blob/master/CHANGELOG.md#migration-guide-3x-to-4x) from version 4
 
 ## Installation
 
@@ -155,8 +154,10 @@ module.exports = {
         {
           test: /my-file\.js$/,
           operations: [
-            new ReplaceOperation('once', 'searchValue', 'replaceValue'),
-            new ReplaceOperation('all', 'searchValue', 'replaceValue')
+            new ReplaceOperation('searchValue', 'replaceValue'),
+            // the same as previous
+            new ReplaceOperation('searchValue', 'replaceValue', 'once'),
+            new ReplaceOperation('searchValue', 'replaceValue', 'all')
           ]
         }
       ]
@@ -268,10 +269,11 @@ console.log('Hello world!');
 function HelloMessage(props) {
   return (
     <div>
-      Hello, $NAME
+      Hello, $NAME!
       <button
         onClick={() => {
-          props.userLogout();
+          props.onLogout();
+
           alert('Goodbye, $NAME!');
         }}
       >
@@ -293,9 +295,9 @@ plugins: [
       {
         test: /my-component\.jsx$/,
         operations: [
-          new ReplaceOperation('all', '$NAME', 'Artem Batura'),
-          new ReplaceOperation('once', '$EXIT_LABEL', 'Exit')
-          // new ReplaceOperation('once', '$EXIT_LABEL', 'Leave')
+          new ReplaceOperation('$NAME', 'Artem Batura', 'all'),
+          new ReplaceOperation('$EXIT_LABEL', 'Exit')
+          // new ReplaceOperation('$EXIT_LABEL', 'Leave')
         ]
       }
     ]
@@ -334,11 +336,11 @@ function HelloMessage(props) {
 
 ```jsx
 function HelloMessage(props) {
-  $MY_DEBUG_CODE;
+  /* @MY_DEBUG_CODE */
 
   return (
     <div>
-      Hello, user! $MY_USER_COMPONENT
+      Hello, user! {/* @MY_USER_COMPONENT */}
       <button onClick={() => props.userLogout()}>Exit</button>
     </div>
   );
@@ -357,13 +359,11 @@ plugins: [
         test: /my-component\.js$/,
         operations: [
           new ReplaceOperation(
-            'once',
-            '$MY_DEBUG_CODE',
+            '/* @MY_DEBUG_CODE */',
             'console.log("props", props)'
           ),
           new ReplaceOperation(
-            'once',
-            '$MY_USER_COMPONENT',
+            '{/* @MY_USER_COMPONENT */}',
             '<div>compilation-time markup</div>'
           )
         ]
