@@ -1,4 +1,4 @@
-import { AbstractSerializable } from '../AbstractSerializable';
+import { AbstractSerializable } from './AbstractSerializable';
 
 type Primitive = string | number | boolean | null | undefined;
 

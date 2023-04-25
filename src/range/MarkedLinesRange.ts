@@ -1,5 +1,5 @@
-import { AbstractSerializable } from '../AbstractSerializable';
 import { SerializableClassInstance } from '../serializable';
+import { AbstractSerializable } from '../serializable/AbstractSerializable';
 
 export class MarkedLinesRange extends AbstractSerializable {
   SERIALIZABLE_CLASS = 'LinesRangeMarkerGroup';
