@@ -2,7 +2,7 @@ import { validate } from 'schema-utils';
 import type { Schema } from 'schema-utils/declarations/validate';
 import type { Compiler, NormalModule } from 'webpack';
 
-import { AbstractOperation } from './AbstractOperation';
+import { AbstractOperation } from './operation/AbstractOperation';
 
 export interface Rule {
   test: RegExp | ((module: NormalModule) => boolean);
