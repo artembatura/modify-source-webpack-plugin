@@ -1,5 +1,7 @@
-import { SerializableClassInstance } from '../serializable';
-import { AbstractSerializable } from '../serializable/AbstractSerializable';
+import {
+  AbstractSerializable,
+  SerializableClassInstance
+} from '../serializable';
 
 export class MarkedTextRange extends AbstractSerializable {
   SERIALIZABLE_CLASS = 'TextRangeMarkerGroup';

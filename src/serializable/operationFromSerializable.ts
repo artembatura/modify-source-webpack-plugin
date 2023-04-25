@@ -1,5 +1,8 @@
-import { ConcatOperation, ReplaceOperation } from '../operation';
-import { AbstractOperation } from '../operation/AbstractOperation';
+import {
+  AbstractOperation,
+  ConcatOperation,
+  ReplaceOperation
+} from '../operation';
 import { isSerializableOfClass } from './isSerializableOfClass';
 import { SerializableClassInstance } from './SerializableClassInstance';
 
