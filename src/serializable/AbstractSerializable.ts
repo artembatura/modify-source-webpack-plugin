@@ -1,4 +1,4 @@
-import { SerializableClassInstance } from './serializable';
+import { SerializableClassInstance } from './index';
 
 export abstract class AbstractSerializable {
   public abstract SERIALIZABLE_CLASS: string;
