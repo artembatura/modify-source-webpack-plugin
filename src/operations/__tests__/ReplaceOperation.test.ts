@@ -1,4 +1,4 @@
-import { LinesRangeMarked } from '../../range/LinesRangeMarked';
+import { MarkedLinesRange } from '../../range/MarkedLinesRange';
 import { ReplaceOperation, ReplaceStrategy } from '../ReplaceOperation';
 
 describe('ReplaceOperation', () => {
@@ -14,7 +14,7 @@ describe('ReplaceOperation', () => {
       `.trim();
 
     const result = new ReplaceOperation(
-      new LinesRangeMarked('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new MarkedLinesRange('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");',
       ReplaceStrategy.ONCE
     ).apply(text);
@@ -48,7 +48,7 @@ describe('ReplaceOperation', () => {
     `;
 
     const result = new ReplaceOperation(
-      new LinesRangeMarked('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new MarkedLinesRange('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");\n',
       ReplaceStrategy.ONCE
     ).apply(text);
@@ -98,7 +98,7 @@ console.log("Hello world!");
     `;
 
     const result = new ReplaceOperation(
-      new LinesRangeMarked('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new MarkedLinesRange('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");\n',
       3
     ).apply(text);

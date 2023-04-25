@@ -1,5 +1,5 @@
 import { AbstractOperation } from '../AbstractOperation';
-import { fillStringWithConstants } from '../fillStringWithConstants';
+import { fillConstantsInString } from '../fillConstantsInString';
 import { SerializableClassInstance } from '../types';
 
 export enum ConcatPosition {
@@ -30,7 +30,7 @@ export class ConcatOperation extends AbstractOperation {
     constants?: TConstants
   ): ConcatOperation {
     const value = constants
-      ? fillStringWithConstants(serializable.value, constants)
+      ? fillConstantsInString(serializable.value, constants)
       : serializable.value;
 
     return new ConcatOperation(serializable.position, value);

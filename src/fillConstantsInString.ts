@@ -1,4 +1,4 @@
-export function fillStringWithConstants<
+export function fillConstantsInString<
   TConstants extends Record<string, string | number>
 >(textValue: string, constants: TConstants): string {
   let newTextValue = textValue;

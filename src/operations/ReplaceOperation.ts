@@ -1,9 +1,9 @@
 import { AbstractOperation } from '../AbstractOperation';
-import { fillStringWithConstants } from '../fillStringWithConstants';
+import { fillConstantsInString } from '../fillConstantsInString';
 import { LinesRange } from '../range/LinesRange';
-import { LinesRangeMarked } from '../range/LinesRangeMarked';
+import { MarkedLinesRange } from '../range/MarkedLinesRange';
+import { MarkedTextRange } from '../range/MarkedTextRange';
 import { TextRange } from '../range/TextRange';
-import { TextRangeMarked } from '../range/TextRangeMarked';
 import { rangeFromSerializable } from '../serializable/rangeFromSerializable';
 import { SerializableClassInstance } from '../types';
 
@@ -14,7 +14,7 @@ export enum ReplaceStrategy {
 
 function applyReplaceLinesRangeOnce(
   sourceText: string,
-  searchValue: LinesRangeMarked,
+  searchValue: MarkedLinesRange,
   replaceValue: string
 ): string | null {
   const lines = sourceText.split('\n');
@@ -41,7 +41,7 @@ function applyReplaceLinesRangeOnce(
 
 function applyReplaceTextRange(
   sourceText: string,
-  searchValue: TextRangeMarked,
+  searchValue: MarkedTextRange,
   replaceValue: string
 ): string | null {
   const startIndex = sourceText.indexOf(searchValue.startToken);
@@ -66,8 +66,8 @@ export class ReplaceOperation extends AbstractOperation {
       | string
       | TextRange
       | LinesRange
-      | TextRangeMarked
-      | LinesRangeMarked,
+      | MarkedTextRange
+      | MarkedLinesRange,
     public readonly replaceValue: string,
     public readonly repeatCount: number | ReplaceStrategy = ReplaceStrategy.ONCE
   ) {
@@ -93,7 +93,7 @@ export class ReplaceOperation extends AbstractOperation {
     constants?: TConstants
   ): ReplaceOperation {
     const replaceValue = constants
-      ? fillStringWithConstants(serializable.replaceValue, constants)
+      ? fillConstantsInString(serializable.replaceValue, constants)
       : serializable.replaceValue;
 
     const searchValue =
@@ -190,13 +190,13 @@ export class ReplaceOperation extends AbstractOperation {
     }
 
     if (
-      searchValue instanceof TextRangeMarked ||
-      searchValue instanceof LinesRangeMarked
+      searchValue instanceof MarkedTextRange ||
+      searchValue instanceof MarkedLinesRange
     ) {
       const doApplyOnce:
         | typeof applyReplaceTextRange
         | typeof applyReplaceLinesRangeOnce =
-        searchValue instanceof TextRangeMarked
+        searchValue instanceof MarkedTextRange
           ? applyReplaceTextRange
           : applyReplaceLinesRangeOnce;
 
