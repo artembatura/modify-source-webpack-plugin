@@ -1,3 +1,3 @@
 export * from './ModifySourcePlugin';
-export * from './operations';
+export * from './operation';
 export * from './range';
