@@ -1,11 +1,15 @@
 import { AbstractOperation } from '../AbstractOperation';
 import { fillConstantsInString } from '../fillConstantsInString';
-import { LinesRange } from '../range/LinesRange';
-import { MarkedLinesRange } from '../range/MarkedLinesRange';
-import { MarkedTextRange } from '../range/MarkedTextRange';
-import { TextRange } from '../range/TextRange';
-import { rangeFromSerializable } from '../serializable/rangeFromSerializable';
-import { SerializableClassInstance } from '../types';
+import {
+  TextRange,
+  LinesRange,
+  MarkedTextRange,
+  MarkedLinesRange
+} from '../range';
+import {
+  rangeFromSerializable,
+  SerializableClassInstance
+} from '../serializable';
 
 export enum ReplaceStrategy {
   ALL = 'all',

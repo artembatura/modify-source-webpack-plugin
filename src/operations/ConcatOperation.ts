@@ -1,6 +1,6 @@
 import { AbstractOperation } from '../AbstractOperation';
 import { fillConstantsInString } from '../fillConstantsInString';
-import { SerializableClassInstance } from '../types';
+import { SerializableClassInstance } from '../serializable';
 
 export enum ConcatPosition {
   START = 'start',
