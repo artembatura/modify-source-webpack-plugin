@@ -1,3 +1,4 @@
+export * from './AbstractSerializable';
 export * from './SerializableClassInstance';
 export * from './isSerializableOfClass';
 export * from './rangeFromSerializable';

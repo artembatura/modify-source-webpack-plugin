@@ -1,4 +1,4 @@
-import { AbstractSerializable } from '../serializable/AbstractSerializable';
+import { AbstractSerializable } from '../serializable';
 
 export abstract class AbstractOperation extends AbstractSerializable {
   public abstract apply(sourceText: string): string;
