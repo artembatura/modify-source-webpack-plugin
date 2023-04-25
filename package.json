@@ -1,6 +1,6 @@
 {
   "name": "modify-source-webpack-plugin",
-  "version": "5.0.0-beta.1",
+  "version": "5.0.0-beta.2",
   "description": "Webpack plugin for modifying modules source",
   "author": {
     "name": "Artem Batura",
