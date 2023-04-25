@@ -4,7 +4,7 @@ import {
 } from '../serializable';
 
 export class TextRange extends AbstractSerializable {
-  SERIALIZABLE_CLASS = 'TextRange';
+  SERIALIZABLE_CLASS = TextRange.name;
 
   constructor(
     public readonly startPos: number,

@@ -4,7 +4,7 @@ import {
 } from '../serializable';
 
 export class LinesRange extends AbstractSerializable {
-  SERIALIZABLE_CLASS = 'LinesRange';
+  SERIALIZABLE_CLASS = LinesRange.name;
 
   constructor(
     public readonly startLinePos: number,

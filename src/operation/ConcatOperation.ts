@@ -8,7 +8,7 @@ export enum ConcatPosition {
 }
 
 export class ConcatOperation extends AbstractOperation {
-  SERIALIZABLE_CLASS = 'ConcatOperation';
+  SERIALIZABLE_CLASS = ConcatOperation.name;
 
   constructor(
     public readonly position: ConcatPosition,
