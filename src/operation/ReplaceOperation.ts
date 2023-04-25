@@ -1,4 +1,3 @@
-import { fillConstantsInString } from '../fillConstantsInString';
 import {
   TextRange,
   LinesRange,
@@ -10,6 +9,7 @@ import {
   SerializableClassInstance
 } from '../serializable';
 import { AbstractOperation } from './AbstractOperation';
+import { fillConstantsInString } from './utils/fillConstantsInString';
 
 export enum ReplaceStrategy {
   ALL = 'all',
