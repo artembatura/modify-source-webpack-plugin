@@ -6,7 +6,7 @@ export function fillConstantsInString<
   Object.keys(constants).forEach(constant => {
     const constantValue = String(constants[constant]);
 
-    newTextValue = textValue.replace(
+    newTextValue = newTextValue.replace(
       new RegExp(`\\$${constant}`, 'g'),
       constantValue
     );
