@@ -1,12 +1,12 @@
 import { LinesRange } from '../range/LinesRange';
-import { LinesRangeMarked } from '../range/LinesRangeMarked';
+import { MarkedLinesRange } from '../range/MarkedLinesRange';
+import { MarkedTextRange } from '../range/MarkedTextRange';
 import { TextRange } from '../range/TextRange';
-import { TextRangeMarked } from '../range/TextRangeMarked';
 import { SerializableClassInstance } from '../types';
 import { isSerializableOfClass } from './isSerializableOfClass';
 
 export function rangeFromSerializable<
-  T extends TextRange | TextRangeMarked | LinesRange | LinesRangeMarked
+  T extends TextRange | MarkedTextRange | LinesRange | MarkedLinesRange
 >(serializable: SerializableClassInstance<T>): T {
   if (isSerializableOfClass(serializable, TextRange)) {
     return TextRange.fromSerializable(serializable) as T;
@@ -16,12 +16,12 @@ export function rangeFromSerializable<
     return LinesRange.fromSerializable(serializable) as T;
   }
 
-  if (isSerializableOfClass(serializable, TextRangeMarked)) {
-    return TextRangeMarked.fromSerializable(serializable) as T;
+  if (isSerializableOfClass(serializable, MarkedTextRange)) {
+    return MarkedTextRange.fromSerializable(serializable) as T;
   }
 
-  if (isSerializableOfClass(serializable, LinesRangeMarked)) {
-    return LinesRangeMarked.fromSerializable(serializable) as T;
+  if (isSerializableOfClass(serializable, MarkedLinesRange)) {
+    return MarkedLinesRange.fromSerializable(serializable) as T;
   }
 
   throw new Error(`Unknown range serializable ${serializable}`);
