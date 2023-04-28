@@ -3,7 +3,7 @@ import {
   LinesRange,
   MarkedTextRange,
   MarkedLinesRange
-} from '../range';
+} from '../ranges';
 import {
   rangeFromSerializable,
   SerializableClassInstance
