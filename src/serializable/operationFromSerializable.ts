@@ -2,7 +2,7 @@ import {
   AbstractOperation,
   ConcatOperation,
   ReplaceOperation
-} from '../operation';
+} from '../operations';
 import { isSerializableOfClass } from './isSerializableOfClass';
 import { SerializableClassInstance } from './SerializableClassInstance';
 

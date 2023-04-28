@@ -1,4 +1,4 @@
-import { MarkedLinesRange } from '../../range/MarkedLinesRange';
+import { MarkedLinesRange } from '../../ranges/MarkedLinesRange';
 import { ReplaceOperation, ReplaceStrategy } from '../ReplaceOperation';
 
 describe('ReplaceOperation', () => {

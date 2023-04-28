@@ -5,7 +5,7 @@ import webpackV5, { Stats } from 'webpack';
 import webpackV4 from 'webpack-v4';
 
 import { ModifySourcePlugin } from '../ModifySourcePlugin';
-import { ConcatOperation, ConcatPosition } from '../operation';
+import { ConcatOperation, ConcatPosition } from '../operations';
 
 import DoneCallback = jest.DoneCallback;
 
