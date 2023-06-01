@@ -1,3 +1,9 @@
+## 4.1.0 (2023-06-01)
+
+### Issue [#87](https://github.com/artembatura/modify-source-webpack-plugin/issues/87)
+
+Fixed bug when plugin doesn't attach loader to module and file is not being modified again in watch mode after triggered re-compilation.
+
 ## 4.0.0 (2023-02-11)
 
 The main step forward in this release was rejecting a bad approach with global variable which was used to access modify functions from webpack loader.

@@ -58,9 +58,9 @@ export class ModifySourcePlugin {
   public apply(compiler: Compiler): void {
     const { rules, debug, constants = {} } = this.options;
 
-    const modifiedModules: (string | number)[] = [];
-
     compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
+      const modifiedModules: (string | number)[] = [];
+
       const tapCallback = (_: any, normalModule: NormalModule) => {
         const userRequest = normalModule.userRequest || '';
 
