@@ -112,7 +112,7 @@ export class ReplaceOperation extends AbstractOperation {
     );
   }
 
-  apply(sourceText: string): string {
+  public apply(sourceText: string): string {
     const searchValue = this.searchValue;
 
     if (typeof searchValue === 'string') {

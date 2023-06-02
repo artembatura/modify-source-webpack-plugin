@@ -36,7 +36,7 @@ export class ConcatOperation extends AbstractOperation {
     return new ConcatOperation(serializable.position, value);
   }
 
-  apply(sourceText: string): string {
+  public apply(sourceText: string): string {
     switch (this.position) {
       case ConcatPosition.START:
         return this.value + sourceText;
