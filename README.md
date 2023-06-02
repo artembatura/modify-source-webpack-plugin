@@ -154,9 +154,10 @@ module.exports = {
         {
           test: /my-file\.js$/,
           operations: [
+            // two indentical operations, 'once' is default value
             new ReplaceOperation('searchValue', 'replaceValue'),
-            // the same as previous
             new ReplaceOperation('searchValue', 'replaceValue', 'once'),
+
             new ReplaceOperation('searchValue', 'replaceValue', 'all')
           ]
         }
