@@ -3,8 +3,8 @@ import {
   SerializableClassInstance
 } from '../serializable';
 
-export class MarkedTextRange extends AbstractSerializable {
-  SERIALIZABLE_CLASS = MarkedTextRange.name;
+export class TextLinesSection extends AbstractSerializable {
+  SERIALIZABLE_CLASS = TextLinesSection.name;
 
   constructor(
     public readonly startToken: string,
@@ -13,7 +13,7 @@ export class MarkedTextRange extends AbstractSerializable {
     super();
   }
 
-  public toSerializable(): SerializableClassInstance<MarkedTextRange> {
+  public toSerializable(): SerializableClassInstance<TextLinesSection> {
     return {
       SERIALIZABLE_CLASS: this.SERIALIZABLE_CLASS,
       startToken: this.startToken,
@@ -22,8 +22,8 @@ export class MarkedTextRange extends AbstractSerializable {
   }
 
   public static fromSerializable(
-    serializable: SerializableClassInstance<MarkedTextRange>
-  ): MarkedTextRange {
-    return new MarkedTextRange(serializable.startToken, serializable.endToken);
+    serializable: SerializableClassInstance<TextLinesSection>
+  ): TextLinesSection {
+    return new TextLinesSection(serializable.startToken, serializable.endToken);
   }
 }
