@@ -1,8 +1,8 @@
-import { MarkedLinesRange } from '../../ranges/MarkedLinesRange';
+import { TextLinesSection } from '../../range';
 import { ReplaceOperation, ReplaceStrategy } from '../ReplaceOperation';
 
 describe('ReplaceOperation', () => {
-  it('searchValue=LinesRangeMarkerGroup, replaceCount=once', () => {
+  it('searchValue=TextLinesSection, replaceCount=once', () => {
     const text = `
       /* @REPLACE_START */
         class FooBar {
@@ -14,7 +14,7 @@ describe('ReplaceOperation', () => {
       `.trim();
 
     const result = new ReplaceOperation(
-      new MarkedLinesRange('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new TextLinesSection('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");',
       ReplaceStrategy.ONCE
     ).apply(text);
@@ -22,7 +22,7 @@ describe('ReplaceOperation', () => {
     expect(result).toEqual('console.log("Hello world!");');
   });
 
-  it('searchValue=LinesRangeMarkerGroup, replaceCount=once many markers', () => {
+  it('searchValue=TextLinesSection, replaceCount=once many markers', () => {
     const text = `
       /* @REPLACE_START */
         class FooBar {
@@ -48,7 +48,7 @@ describe('ReplaceOperation', () => {
     `;
 
     const result = new ReplaceOperation(
-      new MarkedLinesRange('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new TextLinesSection('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");\n',
       ReplaceStrategy.ONCE
     ).apply(text);
@@ -72,7 +72,7 @@ console.log("Hello world!");
     `);
   });
 
-  it('searchValue=LinesRangeMarkerGroup, replaceCount=2', () => {
+  it('searchValue=TextLinesSection, replaceCount=2', () => {
     const text = `
       /* @REPLACE_START */
         class FooBar {
@@ -98,7 +98,7 @@ console.log("Hello world!");
     `;
 
     const result = new ReplaceOperation(
-      new MarkedLinesRange('/* @REPLACE_START */', '/* @REPLACE_END */'),
+      new TextLinesSection('/* @REPLACE_START */', '/* @REPLACE_END */'),
       'console.log("Hello world!");\n',
       3
     ).apply(text);

@@ -7,8 +7,8 @@ export class TextRange extends AbstractSerializable {
   SERIALIZABLE_CLASS = TextRange.name;
 
   constructor(
-    public readonly startPos: number,
-    public readonly endPos: number
+    public readonly startIndex: number,
+    public readonly endIndex: number
   ) {
     super();
   }
@@ -16,14 +16,14 @@ export class TextRange extends AbstractSerializable {
   public toSerializable(): SerializableClassInstance<TextRange> {
     return {
       SERIALIZABLE_CLASS: this.SERIALIZABLE_CLASS,
-      startPos: this.startPos,
-      endPos: this.endPos
+      startIndex: this.startIndex,
+      endIndex: this.endIndex
     };
   }
 
   public static fromSerializable(
     serializable: SerializableClassInstance<TextRange>
   ): TextRange {
-    return new TextRange(serializable.startPos, serializable.endPos);
+    return new TextRange(serializable.startIndex, serializable.endIndex);
   }
 }

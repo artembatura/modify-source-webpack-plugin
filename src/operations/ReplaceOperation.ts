@@ -1,9 +1,9 @@
 import {
   TextRange,
-  LinesRange,
-  MarkedTextRange,
-  MarkedLinesRange
-} from '../ranges';
+  TextLinesRange,
+  TextSection,
+  TextLinesSection
+} from '../range';
 import {
   rangeFromSerializable,
   SerializableClassInstance
@@ -18,7 +18,7 @@ export enum ReplaceStrategy {
 
 function applyReplaceLinesRangeOnce(
   sourceText: string,
-  searchValue: MarkedLinesRange,
+  searchValue: TextLinesSection,
   replaceValue: string
 ): string | null {
   const lines = sourceText.split('\n');
@@ -36,7 +36,7 @@ function applyReplaceLinesRangeOnce(
     return null;
   }
 
-  const range = new LinesRange(startLineIndex, endLineIndex);
+  const range = new TextLinesRange(startLineIndex, endLineIndex);
 
   return new ReplaceOperation(range, replaceValue, ReplaceStrategy.ONCE).apply(
     sourceText
@@ -45,7 +45,7 @@ function applyReplaceLinesRangeOnce(
 
 function applyReplaceTextRange(
   sourceText: string,
-  searchValue: MarkedTextRange,
+  searchValue: TextSection,
   replaceValue: string
 ): string | null {
   const startIndex = sourceText.indexOf(searchValue.startToken);
@@ -69,9 +69,9 @@ export class ReplaceOperation extends AbstractOperation {
     public readonly searchValue:
       | string
       | TextRange
-      | LinesRange
-      | MarkedTextRange
-      | MarkedLinesRange,
+      | TextLinesRange
+      | TextSection
+      | TextLinesSection,
     public readonly replaceValue: string,
     public readonly repeatCount: number | ReplaceStrategy = ReplaceStrategy.ONCE
   ) {
@@ -140,32 +140,32 @@ export class ReplaceOperation extends AbstractOperation {
 
     if (searchValue instanceof TextRange) {
       if (
-        searchValue.startPos >= sourceText.length ||
-        searchValue.endPos > sourceText.length
+        searchValue.startIndex >= sourceText.length ||
+        searchValue.endIndex > sourceText.length
       ) {
         return sourceText;
       }
 
-      if (searchValue.startPos >= searchValue.endPos) {
+      if (searchValue.startIndex >= searchValue.endIndex) {
         return sourceText;
       }
 
       return (
-        sourceText.slice(0, searchValue.startPos - 1) +
+        sourceText.slice(0, searchValue.startIndex - 1) +
         this.replaceValue +
-        sourceText.slice(searchValue.endPos, sourceText.length)
+        sourceText.slice(searchValue.endIndex, sourceText.length)
       );
     }
 
-    if (searchValue instanceof LinesRange) {
+    if (searchValue instanceof TextLinesRange) {
       if (
-        searchValue.startLinePos >= sourceText.length ||
-        searchValue.endLinePos > sourceText.length
+        searchValue.startIndex >= sourceText.length ||
+        searchValue.endIndex > sourceText.length
       ) {
         return sourceText;
       }
 
-      if (searchValue.startLinePos >= searchValue.endLinePos) {
+      if (searchValue.startIndex >= searchValue.endIndex) {
         return sourceText;
       }
 
@@ -174,8 +174,8 @@ export class ReplaceOperation extends AbstractOperation {
 
       return lines.reduce((acc, line, lineIndex) => {
         if (
-          lineIndex >= searchValue.startLinePos &&
-          lineIndex <= searchValue.endLinePos
+          lineIndex >= searchValue.startIndex &&
+          lineIndex <= searchValue.endIndex
         ) {
           if (!valueHasReplaced) {
             valueHasReplaced = true;
@@ -194,13 +194,13 @@ export class ReplaceOperation extends AbstractOperation {
     }
 
     if (
-      searchValue instanceof MarkedTextRange ||
-      searchValue instanceof MarkedLinesRange
+      searchValue instanceof TextSection ||
+      searchValue instanceof TextLinesSection
     ) {
       const doApplyOnce:
         | typeof applyReplaceTextRange
         | typeof applyReplaceLinesRangeOnce =
-        searchValue instanceof MarkedTextRange
+        searchValue instanceof TextSection
           ? applyReplaceTextRange
           : applyReplaceLinesRangeOnce;
 
