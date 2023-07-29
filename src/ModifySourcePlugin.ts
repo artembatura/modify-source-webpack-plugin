@@ -1,8 +1,13 @@
+import crypto from 'crypto';
 import { validate } from 'schema-utils';
 import type { Schema } from 'schema-utils/declarations/validate';
 import type { Compiler, NormalModule } from 'webpack';
 
+import { getPluginLoaderPath } from './getPluginLoaderPath';
+import { isPluginWebpackLoader } from './isPluginWebpackLoader';
+import { NormalModuleLoader } from './NormalModuleLoader';
 import { AbstractOperation } from './operations';
+import { PluginWebpackLoaderOptions } from './PluginWebpackLoaderOptions';
 
 export interface Rule {
   test: RegExp | ((module: NormalModule) => boolean);
@@ -48,6 +53,10 @@ const validationSchema: Schema = {
 
 const PLUGIN_NAME = 'ModifySourcePlugin';
 
+function hashModuleOptions(options: Record<string, any>): string {
+  return crypto.createHash('md5').update(JSON.stringify(options)).digest('hex');
+}
+
 export class ModifySourcePlugin {
   constructor(protected readonly options: Options) {
     validate(validationSchema, options, {
@@ -58,9 +67,9 @@ export class ModifySourcePlugin {
   public apply(compiler: Compiler): void {
     const { rules, debug, constants = {} } = this.options;
 
-    compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
-      const modifiedModules: (string | number)[] = [];
+    const appliedOperationHashes: string[] = [];
 
+    compiler.hooks.compilation.tap(PLUGIN_NAME, compilation => {
       const tapCallback = (_: any, normalModule: NormalModule) => {
         const userRequest = normalModule.userRequest || '';
 
@@ -73,11 +82,28 @@ export class ModifySourcePlugin {
           .substring(startIndex)
           .replace(/\\/g, '/');
 
-        if (modifiedModules.includes(moduleRequest)) {
-          return;
-        }
+        const moduleLoaders = normalModule.loaders as NormalModuleLoader[];
 
         rules.forEach(ruleOptions => {
+          const isRuleAlreadyApplied = moduleLoaders.some(moduleLoader => {
+            if (isPluginWebpackLoader(moduleLoader)) {
+              const loaderOptions =
+                typeof moduleLoader.options === 'string'
+                  ? (JSON.parse(
+                      moduleLoader.options
+                    ) as PluginWebpackLoaderOptions)
+                  : moduleLoader.options;
+
+              return appliedOperationHashes.includes(
+                hashModuleOptions(loaderOptions)
+              );
+            }
+          });
+
+          if (isRuleAlreadyApplied) {
+            return;
+          }
+
           const test = ruleOptions.test;
           const isMatched = (() => {
             if (typeof test === 'function' && test(normalModule)) {
@@ -88,35 +114,21 @@ export class ModifySourcePlugin {
           })();
 
           if (isMatched) {
-            type NormalModuleLoader = {
-              loader: string;
-              options: any;
-              ident?: string;
-              type?: string;
-            };
-
             const serializableOperations = ruleOptions.operations?.map(op =>
               op.toSerializable()
             );
 
-            const loader = (() => {
-              try {
-                return require.resolve('./loader');
-              } catch (e) {
-                return require.resolve('../build/loader.js');
-              }
-            })();
-
-            (normalModule.loaders as NormalModuleLoader[]).push({
-              loader,
+            const loader: NormalModuleLoader = {
+              loader: getPluginLoaderPath(),
               options: {
                 moduleRequest,
                 operations: serializableOperations,
                 constants
               }
-            });
+            };
 
-            modifiedModules.push(moduleRequest);
+            moduleLoaders.push(loader);
+            appliedOperationHashes.push(hashModuleOptions(loader.options));
 
             if (debug) {
               // eslint-disable-next-line no-console
