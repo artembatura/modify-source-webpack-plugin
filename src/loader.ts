@@ -1,10 +1,13 @@
 import path from 'path';
+import { validate } from 'schema-utils';
+import type { Schema } from 'schema-utils/declarations/validate';
 
-import { Operation, SerializableOperation } from './operations';
+import {
+  SerializableClassInstance,
+  operationFromSerializable
+} from './serializable';
 
-const { validate } = require('schema-utils');
-
-const schema = {
+const schema: Schema = {
   type: 'object',
   properties: {
     operations: {
@@ -24,7 +27,7 @@ const schema = {
 };
 
 interface LoaderOptions {
-  operations: SerializableOperation[];
+  operations: SerializableClassInstance<any>[];
   moduleRequest: string;
   constants: Record<string, string>;
 }
@@ -49,15 +52,12 @@ export default function modifyModuleSourceLoader(
   const fileName = path.basename(cleanPath);
 
   return options.operations.reduce((sourceText, serializableOp) => {
-    const operation = Operation.fillConstants(
-      Operation.fromSerializable(serializableOp),
-      {
-        ...options.constants,
-        FILE_PATH: cleanPath,
-        FILE_NAME: fileName
-      }
-    );
+    const operation = operationFromSerializable(serializableOp, {
+      ...options.constants,
+      FILE_PATH: cleanPath,
+      FILE_NAME: fileName
+    });
 
-    return Operation.apply(sourceText, operation);
+    return operation.apply(sourceText);
   }, source);
 }

@@ -1,27 +1,48 @@
+import { SerializableClassInstance } from '../serializable';
 import { AbstractOperation } from './AbstractOperation';
+import { fillConstantsInString } from './utils/fillConstantsInString';
 
-export enum ConcatOperationType {
-  'start' = 'start',
-  'end' = 'end'
+export enum ConcatPosition {
+  START = 'start',
+  END = 'end'
 }
 
 export class ConcatOperation extends AbstractOperation {
+  SERIALIZABLE_CLASS = ConcatOperation.name;
+
   constructor(
-    public readonly type: keyof typeof ConcatOperationType,
+    public readonly position: ConcatPosition,
     public readonly value: string
   ) {
     super();
   }
 
-  public getSerializableProperties(): (keyof this & string)[] {
-    return ['type', 'value'];
+  public toSerializable(): SerializableClassInstance<ConcatOperation> {
+    return {
+      SERIALIZABLE_CLASS: this.SERIALIZABLE_CLASS,
+      position: this.position,
+      value: this.value
+    };
   }
 
-  public getTextProperties(): (keyof this & string)[] {
-    return ['value'];
+  static fromSerializable<TConstants extends Record<string, string | number>>(
+    serializable: SerializableClassInstance<ConcatOperation>,
+    constants?: TConstants
+  ): ConcatOperation {
+    const value = constants
+      ? fillConstantsInString(serializable.value, constants)
+      : serializable.value;
+
+    return new ConcatOperation(serializable.position, value);
   }
 
-  public static getAllowedTypes(): ConcatOperationType[] {
-    return [ConcatOperationType.start, ConcatOperationType.end];
+  public apply(sourceText: string): string {
+    switch (this.position) {
+      case ConcatPosition.START:
+        return this.value + sourceText;
+
+      case ConcatPosition.END:
+        return sourceText + this.value;
+    }
   }
 }

@@ -1,8 +1,8 @@
+import { validate } from 'schema-utils';
+import type { Schema } from 'schema-utils/declarations/validate';
 import type { Compiler, NormalModule } from 'webpack';
 
-import { AbstractOperation, Operation } from './operations';
-
-const { validate } = require('schema-utils');
+import { AbstractOperation } from './operations';
 
 export interface Rule {
   test: RegExp | ((module: NormalModule) => boolean);
@@ -15,7 +15,7 @@ export type Options = {
   constants?: Record<string, string | number>;
 };
 
-const validationSchema = {
+const validationSchema: Schema = {
   type: 'object',
   additionalProperties: false,
   properties: {
@@ -96,16 +96,16 @@ export class ModifySourcePlugin {
             };
 
             const serializableOperations = ruleOptions.operations?.map(op =>
-              Operation.makeSerializable(op)
+              op.toSerializable()
             );
 
-            let loader;
-
-            try {
-              loader = require.resolve('./loader.js');
-            } catch (e) {
-              loader = require.resolve('../build/loader.js');
-            }
+            const loader = (() => {
+              try {
+                return require.resolve('./loader');
+              } catch (e) {
+                return require.resolve('../build/loader.js');
+              }
+            })();
 
             (normalModule.loaders as NormalModuleLoader[]).push({
               loader,
