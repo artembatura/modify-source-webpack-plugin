@@ -10,6 +10,7 @@
     "type": "git",
     "url": "https://github.com/artembatura/modify-source-webpack-plugin"
   },
+  "homepage": "https://github.com/artembatura/modify-source-webpack-plugin#readme",
   "bugs": {
     "url": "https://github.com/artembatura/modify-source-webpack-plugin/issues"
   },
